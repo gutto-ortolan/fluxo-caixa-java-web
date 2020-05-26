@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="stylesheet" type="text/css" href="styles.css">
+
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet" />
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet"
+	href="materialize/css/materialize.min.css" media="screen,projection" />
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Fluxo Caixa</title>
+<link rel="sortcut icon" href="imagens/logo.png"/>
+
+<style>
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+	font-family:Roboto,arial,helvetica;
+}
+
+main {
+	flex: 1 0 auto;
+}
+
+video {
+	width: 100%;
+	height: auto;
+}
+
+/*HEADER*/
+.cabecalho {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0; /* apenas para 'ativar' o posicionamento */
+}
+
+.cabecalho--fixo {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+}
+
+.criadores {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center
+}
+
+/*BOTOES*/
+.btnsNavBar {
+	background-color: #08CF23;
+	margin-right: 10px;
+	/*padding: 10px 10px 10px 10px;*/
+	border-radius: 5px;
+}
+
+/*FOOTER*/
+.page-footer {
+	background: #08CF23;
+	height: 60px;
+}
+
+
+</style>
+
+</head>
+
+<body style="background-color: #F6F6F6;">
+
+
+	<!-- Início do Header -->
+
+	<header class="cabecalho">
+
+		<!-- Logo -->
+		<!-- Botão Entrar -->
+		<!-- Botão Cadastrar -->
+
+		<nav>
+			<div class="nav-wrapper" style="background-color: #FFFF;">
+				<a href="/" class="brand-logo"> <img
+					src="imagens/logo.png" class="responsive-img"
+					style="width: 60px; margin-left: 10px">
+				</a> <a href="#" data-activates="menu-mobile" class="button-collapse">
+					<i class="material-icons" style="color: #08CF23;">menu</i>
+				</a>
+
+				
+				
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<form id="login-form" action="cadastro" method="post" role="form"
+						style="display: block;">
+						<li><input type="submit" class=" btn btnsNavBar"
+							style="margin-right: 5px; color: black;" value="Cadastrar"></input>
+						</li>
+					</form>
+				</ul>
+				
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<form id="login-form" action="login" method="post" role="form"
+						style="display: block;">
+						<li><input type="submit" class=" btn btnsNavBar"
+							style="margin-right: 5px; color: black;" value="Entrar"></input>
+						</li>
+					</form>
+				</ul>
+
+				<ul class="side-nav" id="menu-mobile">
+					<li><a style="color: #08CF23;"><b>Entrar</b></a></li>
+					<li><a style="color: #08CF23;"><b>Cadastrar</b></a></li>
+				</ul>
+			</div>
+		</nav>
+
+	</header>
+	<div class="cabecalho-espaco">
+		<br />
+	</div>
+
+	<!--Fim do Header -->
+
+
+
+
+	<!-- Início do Main -->
+
+	<main class="container">
+		<br /> <br />
+
+		<!-- Trailer Tutorial -->
+		<!-- Escrita explicando o sistema -->
+
+		<div class="row">
+			<div class="col s8 m8">
+				<iframe width="600" height="330"
+					src="https://www.youtube.com/embed/N4koEPJ0bjU" frameborder="0"
+					allowfullscreen></iframe>
+			</div>
+
+			<div class="col s4 m4">
+				<div class="card-panel " style="background: #08CF23;">
+					<span class="black-text">I am a very simple card. I am good
+						at containing small bits of information. I am convenient because I
+						require little markup to use effectively. I am similar to what is
+						called a panel in other frameworks. I am a very simple card. I am
+						good at containing small bits of information. I am convenient
+						because I require little markup to use effectively. I am similar
+						to what is called a panel in other frameworks. </span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Criadores -->
+		<div class="criadores">
+			<h5>
+				<u>Criadores</u>
+			</h5>
+		</div>
+		<div class="row">
+
+			<div class="col s6 m6">
+				<div class="card horizontal">
+					<div class="card-image">
+						<img src="imagens/fotoAugusto.png" style="width: 150px;">
+					</div>
+					<div class="card-stacked">
+						<div class="card-content">
+							<p>Augusto Krüger Ortolan</p>
+							<p>19 anos</p>
+							<p>Ciência da Computação - IMED</p>
+						</div>
+						<div class="card-action">
+							<a href="https://www.instagram.com/guto.ortolan/">@guto.ortolan</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col s6 m6">
+				<div class="card horizontal">
+					<div class="card-image">
+						<img src="imagens/fotoOscar.png" style="width: 150px;">
+					</div>
+					<div class="card-stacked">
+						<div class="card-content">
+							<p>Oscar Gross</p>
+							<p>26 anos</p>
+							<p>Ciência da Computação - IMED</p>
+						</div>
+						<div class="card-action">
+							<a href="https://www.instagram.com/oscar.gross/">@oscar.gross</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</main>
+
+	<!-- Fim do Main -->
+
+
+
+
+	<!--Início do Footer -->
+
+	<footer class="page-footer">
+
+		<div class="container">
+			<span style="color: black;"><b>©2020 Copyright:
+					siscaixa.com.br</b></span> <a class="text-lighten-4 right"
+				style="color: black;" href="#!"><b>Mais Informações</b></a>
+		</div>
+
+	</footer>
+
+	<!-- Fim do Footer -->
+
+
+
+
+
+
+
+
+
+
+
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
+	<script>
+		$(function() {
+			$(".button-collapse").sideNav();
+		});
+	</script>
+
+	<script>
+		function init() {
+			var cabecalho = document.querySelector('.cabecalho');
+			var cabecalhoEspaco = document.querySelector('.cabecalho-espaco');
+			var cabecalhoOffset = cabecalho.offsetTop;
+
+			function verificaCabecalho() {
+				var scrollTop = window.scrollY;
+				var cabecalhoAltura = cabecalho.offsetHeight;
+
+				if (scrollTop >= cabecalhoOffset) {
+					// rolagem da página passou do elemento, vamos fixá-lo
+					cabecalho.classList.add('cabecalho--fixo');
+
+					// ativa cabecalho-espaco para ocupar o espaço perdido
+					cabecalhoEspaco.style.height = cabecalhoAltura + 'px';
+				} else {
+					// retira a classe adicional do elemento
+					cabecalho.classList.remove('cabecalho--fixo');
+
+					// retira a altura do cabecalho-espaco
+					cabecalhoEspaco.style.height = 0;
+				}
+			}
+
+			window.addEventListener('scroll', verificaCabecalho);
+			window.addEventListener('resize', verificaCabecalho);
+		}
+
+		window.addEventListener('load', init);
+	</script>
+
+</body>
+</html>
