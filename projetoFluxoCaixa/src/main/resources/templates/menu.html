@@ -1,11 +1,142 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Fluxo Caixa</title>
-<link rel="sortcut icon" href="imagens/logo.png"/>
+	<meta charset="UTF-8"/>
+	<title>Fluxo Caixa</title>
+
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	<link type="text/css" rel="stylesheet" href="css/styles.css"/>
+
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
 </head>
-<body style="font-family:Roboto,arial,helvetica;">
-<h1 th:text="${session.usuarioLogado.nome}"></h1>
+<body style="background-color: #F6F6F6; ">
+
+
+	<!-- Início do Header -->
+
+	<header class="cabecalho">
+
+		<!-- Logo --> <!-- Botão Entrar --> <!-- Botão Cadastrar -->
+
+		<nav>
+			<div class="nav-wrapper" style="background-color: #FFFF; ">
+				<a href="index.html" class="brand-logo">
+					<img src="imagens/logo.png" class="responsive-img" style="width: 60px; margin-left: 10px">
+				</a>
+				<ul id="navbar-items" class="right hide-on-med-and-down" style="margin-right: 10px;">
+					<li>
+
+						<a class="dropdown-trigger" data-target="dropdown-lanc" href="#">
+							<span class="menus">Lançamentos</span>
+							<i class="material-icons right menus" style="margin-left: 1px;">arrow_drop_down</i>
+						</a>
+
+						<!-- Dropdown -->
+						<ul id="dropdown-lanc" class="dropdown-content">
+							<li><a href="#!"><span class="menus">Novo</span></a></li>
+							<li><a href="#!"><span class="menus">Editar/Excluir</span></a></li>
+							<li><a href="#!"><span class="menus">Programar</span></a></li>
+						</ul>
+
+
+					</li>
+					<li><a href="#" class="menus">Extratos</a></li>
+					<li>
+						<a class="dropdown-trigger" data-target="dropdown-menu" href="#">
+							<span class="menus">Augusto</span>
+							<i class="material-icons left menus" style="margin-right: 4px;">account_circle</i>
+							<i class="material-icons right menus" style="margin-left: 1px;">arrow_drop_down</i>
+						</a>
+
+						<!-- Dropdown -->
+						<ul id="dropdown-menu" class="dropdown-content">
+							<li><a href="#!"><span class="menus">Perfil</span><i class="material-icons left menus" style="margin-right: 4px;">account_box</i></a></li>
+							<li><a href="#!"><span class="menus">Config.</span><i class="material-icons left menus" style="margin-right: 4px;">build</i></a></li>
+							<li class="divider"></li>
+							<li><a href="#!"><span class="menus">Sair</span><i class="material-icons left menus" style="margin-right: 4px;">exit_to_app</i></a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<div class="cabecalho-espaco"><br/></div>
+
+	<!--Fim do Header -->
+
+
+
+
+	<!-- Início do Main -->
+
+	<main class="container">
+
+	</main>
+
+	<!-- Fim do Main -->
+
+
+
+
+	<!--Início do Footer -->
+
+	<footer class="page-footer">
+
+		<div class="container">
+			<span style="color: black;"><b>©2020 Copyright: siscaixa.com.br</b></span>
+			<a class="text-lighten-4 right" style="color: black;" href="#!"><b>Mais Informações</b></a>
+		</div>
+
+	</footer>
+
+	<!-- Fim do Footer -->
+
+
+
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="main.js"></script>
+
+
+	<script>
+		function init() {
+			var cabecalho = document.querySelector('.cabecalho');
+			var cabecalhoEspaco = document.querySelector('.cabecalho-espaco');
+			var cabecalhoOffset = cabecalho.offsetTop;
+
+			function verificaCabecalho() {
+				var scrollTop = window.scrollY;
+				var cabecalhoAltura = cabecalho.offsetHeight;
+
+				if(scrollTop >= cabecalhoOffset) {
+					// rolagem da página passou do elemento, vamos fixá-lo
+					cabecalho.classList.add('cabecalho--fixo');
+					
+					// ativa cabecalho-espaco para ocupar o espaço perdido
+					cabecalhoEspaco.style.height = cabecalhoAltura + 'px';
+				} else {
+					// retira a classe adicional do elemento
+					cabecalho.classList.remove('cabecalho--fixo');
+
+					// retira a altura do cabecalho-espaco
+					cabecalhoEspaco.style.height = 0;
+				}
+			}
+
+			window.addEventListener('scroll', verificaCabecalho);
+			window.addEventListener('resize', verificaCabecalho);
+		}
+
+		window.addEventListener('load', init);
+	</script>
+
+
 </body>
 </html>
