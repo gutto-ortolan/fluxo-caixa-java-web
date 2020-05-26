@@ -1,3 +1,72 @@
 
 
 
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+main {
+	flex: 1 0 auto;
+}
+
+video {
+  width: 100%;
+  height: auto;
+}
+
+
+/*HEADER*/
+
+.cabecalho {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0; /* apenas para 'ativar' o posicionamento */
+}
+
+.cabecalho--fixo {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	box-shadow: 0 2px 7px rgba(0,0,0,0.2);
+}
+
+
+
+
+
+.criadores{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center
+}
+
+
+
+/*BOTOES*/
+.btnsNavBar{
+	background-color: #08CF23; 
+	margin-right: 10px;
+	/*padding: 10px 10px 10px 10px;*/
+	border-radius: 5px;
+}
+
+/*FOOTER*/
+.page-footer {
+	background: #08CF23;
+	height: 60px;
+}
+
+
+
+/*NAVBAR*/
+.menus{
+	/*color:#08CF23;*/
+	color: black;
+
+}
+
+
