@@ -60,6 +60,11 @@ video {
 	height: 60px;
 }
 
+.botoes{
+    box-shadow: 0 0 0 0;
+    border: 0 none;
+    outline: 0;
+}
 
 
 /*NAVBAR*/

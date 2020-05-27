@@ -45,7 +45,7 @@ public class UsuarioController {
 		System.out.println("Usuario Logado: "+ usuario.getNome());
 		return "menu";
 	}
-	
+        
 	
 	@RequestMapping("/efetuarLogin")
 	public String efetuarLogin(@RequestParam("email") String email, @RequestParam("senha") String senha, RedirectAttributes ra, HttpSession session) {
@@ -54,7 +54,7 @@ public class UsuarioController {
 		
 		Usuario usuarioPesquisa = ur.findUsuarioPorEmail(email, senha);
 		System.out.println(usuarioPesquisa);
-		
+                
 		if(usuarioPesquisa == null) {
 			ra.addFlashAttribute("mensagem", "E-mail ou senha inválido.");
 			return "redirect:/login";
