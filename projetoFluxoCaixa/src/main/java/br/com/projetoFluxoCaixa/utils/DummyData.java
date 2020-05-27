@@ -7,9 +7,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.projetoFluxoCaixa.model.EntradaSaida;
 import br.com.projetoFluxoCaixa.model.Lancamento;
-import br.com.projetoFluxoCaixa.model.Usuario;
 import br.com.projetoFluxoCaixa.repository.LancamentoRepository;
 import br.com.projetoFluxoCaixa.repository.UsuarioRepository;
 
@@ -22,7 +20,7 @@ public class DummyData {
 	@Autowired
 	LancamentoRepository lr;
 	
-	@PostConstruct
+	//@PostConstruct
 	public void saveUsuario() {
 		
 		/*Usuario usuario = new Usuario();
