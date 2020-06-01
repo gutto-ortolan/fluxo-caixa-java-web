@@ -51,16 +51,17 @@
 								style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px; margin-top: 100px;">
 
 								<img src="imagens/logo.png" class="responsive-img">
+								
 
 								<div style="color: red;" th:text="${mensagem}" th:if="${mensagem != null}"></div>
 								<div class='row'>
 									<div class='input-field col s6'>
-										<input class='validate' type="text" name='nome' id='nome'
+										<input class='validate' type="text" name='nome'  th:value="${nome}" id='nome'
 											required placeholder="Nome"/>
 									</div>
 
 									<div class='input-field col s6'>
-										<input class='validate' type="text" name='sobrenome' id='sobrenome'
+										<input class='validate' type="text" name='sobrenome' th:value="${sobrenome}" id='sobrenome'
 											required placeholder="Sobrenome" />
 									</div>
 								</div>
@@ -68,7 +69,7 @@
 
 								<div class='row'>
 									<div class='input-field col s12'>
-										<input class='validate' type="text" name='email' id='email'
+										<input class='validate' type="text" name='email' th:value="${email}" id='email'
 											required placeholder="E-mail" />
 									</div>
 								</div>

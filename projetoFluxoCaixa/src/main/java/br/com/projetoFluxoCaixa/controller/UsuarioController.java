@@ -57,6 +57,7 @@ public class UsuarioController {
 		
 		if(usuarioPesquisa == null) {
 			ra.addFlashAttribute("mensagem", "E-mail ou senha inválido.");
+			ra.addFlashAttribute("email", email);
 			return "redirect:/login";
 		}else {
 			session.setAttribute("usuarioLogado", usuarioPesquisa);
@@ -71,16 +72,19 @@ public class UsuarioController {
 		
 		if(usuarioPesquisa != null) {
 			ra.addFlashAttribute("mensagem", "E-mail já cadastrado.");
-			return "redirect:/cadastro";
-		}
-		
-		if(senha.equals(senha1)) {
+		}		
+		else if(senha.equals(senha1)) {
 			ur.save(usuario);
 			return "redirect:/login";
 		}else {
 			ra.addFlashAttribute("mensagem", "As senhas devem ser iguais.");
-			return "redirect:/cadastro";
 		}
+		ra.addFlashAttribute("nome", usuario.getNome());
+		ra.addFlashAttribute("sobrenome", usuario.getSobrenome());
+		ra.addFlashAttribute("email", usuario.getEmail());	
+		return "redirect:/cadastro";
+
+
 	}
 	
 	
