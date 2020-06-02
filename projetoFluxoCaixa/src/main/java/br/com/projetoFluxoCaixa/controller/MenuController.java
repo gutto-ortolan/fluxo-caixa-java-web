@@ -24,4 +24,9 @@ public class MenuController {
     public String perfil() {
         return "perfil";
     }
+    
+    @RequestMapping("/editar-perfil")
+    public String editarPerfil() {
+        return "editar-perfil";
+    }
 }
