@@ -58,7 +58,7 @@ body {
 								<div style="color: red;" th:text="${mensagem}" th:if="${mensagem != null}"></div>
 								<div class='row'>
 									<div class='input-field col s12'>
-										<input class='validate' type="text" name='email' id='email'
+										<input class='validate' type="text" name='email' th:value="${email}" id='email'
 											required placeholder="E-mail" />
 									</div>
 								</div>
