@@ -81,47 +81,50 @@
             <br/>
             <div class="wrapper">
                 <div class="col s7 m12" style="box-shadow: #d3d3d3 2px 2px 1px; background: white; border-radius: 10px; padding: 20px 20px 0px 20px">
-                    <form style="background: white; padding: 5px 20px 5px 20px;">
+                    <form style="background: white; padding: 5px 20px 5px 20px;" method="POST" action="salvarPerfil" th:object="${usuario}">
                         <div class="row">
                             <form class="col s12">
+                                <div style="color: red;" th:text="${mensagem}" th:if="${mensagem != null}"></div>
+                                <input id="idUsuario" type="text" class="validate" style="display: none;" name="idUsuario" th:value="${session.usuarioLogado.idUsuario}">
                                 <div class="row">
                                     <div class="input-field col s6" >
-                                        <input id="first_name" type="text" class="validate" th:value="${session.usuarioLogado.nome}">
+                                        <input id="first_name" type="text" class="validate" name="nome" th:value="${session.usuarioLogado.nome}">
                                         <label for="first_name">Nome</label>
                                     </div>
                                     <div class="input-field col s6">
-                                        <input id="last_name" type="text" class="validate" th:value="${session.usuarioLogado.sobrenome}">
+                                        <input id="last_name" type="text" class="validate" name="sobrenome" th:value="${session.usuarioLogado.sobrenome}">
                                         <label for="last_name">Sobrenome</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12" style="margin-top: 0px;">
-                                        <input id="email" type="text" class="validate" th:value="${session.usuarioLogado.email}">
+                                        <input id="email" type="text" class="validate" name="email" th:value="${session.usuarioLogado.email}">
                                         <label for="email">E-mail</label>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="input-field col s12" style="margin-top: 0px;">
-                                        <input id="password" type="password" class="validate">
+                                        <input id="password" type="password" name="senha" class="validate">
                                         <label for="password">Senha antiga</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s6" style="margin-top: 0px;">
-                                        <input id="password1" type="password" class="validate">
+                                        <input id="password1" type="password" name="senha1" class="validate">
                                         <label for="password1">Nova senha</label>
                                     </div>
                                     <div class="input-field col s6" style="margin-top: 0px;">
-                                        <input id="password2" type="password" class="validate">
+                                        <input id="password2" type="password" name="senha2" class="validate">
                                         <label for="password2">Confirme a senha</label>
                                     </div>
                                 </div>
 
                                 <div style="margin-top: 0px;">
                                     <a class="waves-effect waves-light btn right" style="margin-left: 10px;" href="perfil" method="post">Cancelar</a>
-                                    <a class="waves-effect waves-light btn right" href="salvarPerfil" method="post">Salvar</a>
-
+                                    <button type='submit'
+                                            name='btn_login'
+                                            class='waves-effect waves-light btn right'>Salvar</button>
                                 </div>
 
 
