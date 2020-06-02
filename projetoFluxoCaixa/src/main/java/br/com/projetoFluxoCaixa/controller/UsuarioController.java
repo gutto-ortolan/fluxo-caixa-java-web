@@ -1,8 +1,4 @@
 package br.com.projetoFluxoCaixa.controller;
-//teste
-//teste2
-//mudei o teste
-
 
 import javax.servlet.http.HttpSession;
 
@@ -41,8 +37,6 @@ public class UsuarioController {
 	
 	@RequestMapping("/menu")
 	public String menu(HttpSession session) {
-		Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
-		System.out.println("Usuario Logado: "+ usuario.getNome());
 		return "menu";
 	}
 	

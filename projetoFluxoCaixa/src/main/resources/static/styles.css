@@ -60,6 +60,11 @@ video {
 	height: 60px;
 }
 
+.botoes{
+    box-shadow: 0 0 0 0;
+    border: 0 none;
+    outline: 0;
+}
 
 
 /*NAVBAR*/
@@ -67,6 +72,17 @@ video {
 	/*color:#08CF23;*/
 	color: black;
 
+}
+
+.wrapper {
+  height: 100%;
+  min-height: 100%;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
 }
 
 
