@@ -9,69 +9,63 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="usuario")
-public class Usuario implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+@Table(name = "usuario")
+public class Usuario implements Serializable {
 
-	@Id
-	@SequenceGenerator(name = "SEQUSUARIO", sequenceName = "SEQUSUARIO", allocationSize = 1)
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @SequenceGenerator(name = "SEQUSUARIO", sequenceName = "SEQUSUARIO", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUSUARIO")
-	private Integer idUsuario;
-	
-	private String nome;
-	
-	private String sobrenome;
-	
-	private String email;
-	
-	private String senha;
+    private Integer idUsuario;
 
-	
-	public Integer getIdUsuario() {
-		return idUsuario;
-	}
+    private String nome;
 
-	public void setIdUsuario(Integer idUsuario) {
-		this.idUsuario = idUsuario;
-	}
+    private String sobrenome;
 
-	
+    private String email;
 
-	public String getNome() {
-		return nome;
-	}
+    private String senha;
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
 
-	public String getSobrenome() {
-		return sobrenome;
-	}
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
-	public void setSobrenome(String sobrenome) {
-		this.sobrenome = sobrenome;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getSobrenome() {
+        return sobrenome;
+    }
 
-	public String getSenha() {
-		return senha;
-	}
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-	
-	
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 
 }
