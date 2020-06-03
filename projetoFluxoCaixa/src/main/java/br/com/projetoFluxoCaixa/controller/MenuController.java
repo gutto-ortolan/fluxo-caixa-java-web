@@ -23,6 +23,11 @@ public class MenuController {
     public String privacidade() {
         return "privacidade";
     }
+    
+    @RequestMapping("/cadastrarLancamento")
+    public String cadastrarLanc() {
+        return "cadastrarLancamento";
+    }
 
     @RequestMapping("/privacidadee")
     public String privacidadeNoLogin() {
