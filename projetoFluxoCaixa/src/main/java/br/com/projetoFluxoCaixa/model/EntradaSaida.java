@@ -10,10 +10,11 @@ public enum EntradaSaida {
        if(operacao.startsWith("E")) {
     	   this.operacao = "ENTRADA";
        }else {
-    	   this.operacao = "SAÍDA";
+    	   this.operacao = "SAIDA";
        }
     }
-      
+    
+    
     @Override
     public String toString() {  
         return operacao;  

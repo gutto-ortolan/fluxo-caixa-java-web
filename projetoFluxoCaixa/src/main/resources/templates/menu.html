@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
@@ -10,15 +11,13 @@
         <!--Import materialize.css-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-        <link type="text/css" rel="stylesheet" href="styles.css"/>
+        <link type="text/css" rel="stylesheet" href="../static/styles.css"/>
 
         <!--Let browser know website is optimized for mobile-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
     </head>
-    <body style="background-color: #F6F6F6; ">
 
+    <body style="background-color: #F6F6F6; ">
 
         <!-- Início do Header -->
 
@@ -29,7 +28,7 @@
             <nav>
                 <div class="nav-wrapper" style="background-color: #FFFF; ">
                     <a href="menu" class="brand-logo">
-                        <img src="imagens/logo.png" class="responsive-img" style="width: 60px; margin-left: 10px">
+                        <img src="imagens/logo.png" class="responsive-img" style="width: 60px; margin-left: 280px">
                     </a>
                     <ul id="navbar-items" class="right hide-on-med-and-down" style="margin-right: 10px;">
                         <li>
@@ -58,7 +57,7 @@
 
                             <!-- Dropdown -->
                             <ul id="dropdown-menu" class="dropdown-content">
-				<li><a href="perfil"><span class="menus">Perfil</span><i class="material-icons left menus" style="margin-right: 4px;">account_box</i></a></li>
+				                <li><a href="perfil"><span class="menus">Perfil</span><i class="material-icons left menus" style="margin-right: 4px;">account_box</i></a></li>
                                 <li><a href="configuracao"><span class="menus">Config.</span><i class="material-icons left menus" style="margin-right: 4px;">build</i></a></li>
                                 <li class="divider"></li>
                                 <li><a href="logout"><span class="menus">Sair</span><i class="material-icons left menus" style="margin-right: 4px;">exit_to_app</i></a></li>
@@ -66,25 +65,74 @@
                         </li>
                     </ul>
                 </div>
-            </nav>
+            </nav>            
+			
         </header>
         <div class="cabecalho-espaco"><br/></div>
 
-        <!--Fim do Header -->
+        <!-- Início do SideNav para filtros adicionais, como por anos e meses -->
+        <div>
+            <ul id="slide-out" class="sidenav sidenav-fixed" >
 
+                <li class="collection-header"><h5>2019</h></li>
+                <li class="collection-item"><div>Janeiro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                <li class="collection-item"><div>Fevereiro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                <li class="collection-item"><div>Março<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                <li class="collection-item"><div>Abril<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                <li class="collection-item"><div>Maio<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                <li class="collection-item"><div>Junho<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                <li class="collection-item"><div>Julho<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                <li class="collection-item"><div>Agosto<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                <li class="collection-item"><div>Setembro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                <li class="collection-item"><div>Outubro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                <li class="collection-item"><div>Novembro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                <li class="collection-item"><div>Dezembro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
 
-
-
-        <!-- Início do Main -->
+              
+      
+            </ul>
+        </div>
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        
 
         <main class="container">
+           
+			<div class="z-depth-1 table-div">
+			    <table class="responsive-table centered">
+		            <thead>
+		                <tr>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Débito</th>
+                            <th>Crédito</th>
+                            <th>Saldo</th>		              
+		                </tr>
+                    </thead>
 
-        </main>
+		            <tbody   th:each="users : ${users}">
+		                <tr>          		         
+			                <td th:text="${users.nome}">...</td>
+				            <td th:text="${users.sobrenome}">...</td>
+				            <td th:text="${users.email}">...</td>
+                        </tr>
+                  					
+					<tbody>					   
+                </table>   
+                    <!--<td th:text="${lan.getNome()}"></td>
+                    th:each="lan : ${lan}"
+
+                    <div th:switch="${lan.getNome}"> 
+                    
+                    <td style="background-color: red;" th:text="${lan.getValor()}" th:case="descricao"></td>
+
+                    <td style="background-color: green;" th:text="${lan.getValor()}" th:case="E"></td></div>
+
+                    <td th:text="${lan.getValor()"></td>
+                    -->
+	        </div>
+       </main>
 
         <!-- Fim do Main -->
-
-
-
 
         <!--Início do Footer -->
 
@@ -98,44 +146,71 @@
         <!-- Fim do Footer -->
 
 
-
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script src="main.js"></script>
 
-
+        <!-- JS p/ navbar -->
         <script>
-                        function init() {
-                            var cabecalho = document.querySelector('.cabecalho');
-                            var cabecalhoEspaco = document.querySelector('.cabecalho-espaco');
-                            var cabecalhoOffset = cabecalho.offsetTop;
+            function init() {
+                var cabecalho = document.querySelector('.cabecalho');
+                var cabecalhoEspaco = document.querySelector('.cabecalho-espaco');
+                var cabecalhoOffset = cabecalho.offsetTop;
 
-                            function verificaCabecalho() {
-                                var scrollTop = window.scrollY;
-                                var cabecalhoAltura = cabecalho.offsetHeight;
+                function verificaCabecalho() {
+                    var scrollTop = window.scrollY;
+                    var cabecalhoAltura = cabecalho.offsetHeight;
 
-                                if (scrollTop >= cabecalhoOffset) {
-                                    // rolagem da página passou do elemento, vamos fixá-lo
-                                    cabecalho.classList.add('cabecalho--fixo');
+                    if (scrollTop >= cabecalhoOffset) {
+                        // rolagem da página passou do elemento, vamos fixá-lo
+                        cabecalho.classList.add('cabecalho--fixo');
 
-                                    // ativa cabecalho-espaco para ocupar o espaço perdido
-                                    cabecalhoEspaco.style.height = cabecalhoAltura + 'px';
-                                } else {
-                                    // retira a classe adicional do elemento
-                                    cabecalho.classList.remove('cabecalho--fixo');
+                        // ativa cabecalho-espaco para ocupar o espaço perdido
+                        cabecalhoEspaco.style.height = cabecalhoAltura + 'px';
+                    } else {
+                        // retira a classe adicional do elemento
+                        cabecalho.classList.remove('cabecalho--fixo');
 
-                                    // retira a altura do cabecalho-espaco
-                                    cabecalhoEspaco.style.height = 0;
-                                }
-                            }
+                        // retira a altura do cabecalho-espaco
+                        cabecalhoEspaco.style.height = 0;
+                    }
+                }
+                window.addEventListener('scroll', verificaCabecalho);
+                window.addEventListener('resize', verificaCabecalho);
+            }
+            window.addEventListener('load', init);
+        </script>   
 
-                            window.addEventListener('scroll', verificaCabecalho);
-                            window.addEventListener('resize', verificaCabecalho);
-                        }
+        <!-- JS p/ sidenav -->
+        
+        <script>  
 
-                        window.addEventListener('load', init);
+            //document.addEventListener('DOMContentLoaded', function() {
+            //    var elems = document.querySelectorAll('.sidenav');
+            //    var instances = M.Sidenav.init(elems, options);
+            //});           
+
+            $(document).ready(function(){
+                $('.sidenav').sidenav({
+                 
+                });
+            });
+
+
         </script>
 
-
+        <style>
+            #slide-out{
+                padding: 0px 30px;
+                width: 250px;
+            }
+            .table-div{
+                margin-left: 250px;
+            }
+            .menus{
+                color: black;
+            }
+        </style>
+    
     </body>
 </html>
