@@ -17,7 +17,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
     </head>
 
-    <body style="background-color: #F6F6F6; ">
+    <body class="body">
 
         <!-- Início do Header -->
 
@@ -28,7 +28,7 @@
             <nav>
                 <div class="nav-wrapper" style="background-color: #FFFF; ">
                     <a href="menu" class="brand-logo">
-                        <img src="imagens/logo.png" class="responsive-img" style="width: 60px; margin-left: 280px">
+                        <img src="imagens/logo.png" class="responsive-img" style="width: 60px; margin-left: 10px">
                     </a>
                     <ul id="navbar-items" class="right hide-on-med-and-down" style="margin-right: 10px;">
                         <li>
@@ -44,8 +44,6 @@
                                 <li><a href="manutencao-lancamento"><span class="menus">Editar/Excluir</span></a></li>
                                 <li><a href="programar-lancamento"><span class="menus">Programar</span></a></li>
                             </ul>
-
-
                         </li>
                         <li><a href="#" class="menus">Extratos</a></li>
                         <li>
@@ -70,78 +68,91 @@
         </header>
         <div class="cabecalho-espaco"><br/></div>
 
-        <!-- Início do SideNav para filtros adicionais, como por anos e meses -->
-        <div>
-            <ul id="slide-out" class="sidenav sidenav-fixed" >
+        <!-- Bloco de filtros a esquerda -->
+        <main class="row">
+            <div class="col s2 m2">
 
-                <li class="collection-header"><h5>2019</h></li>
-                <li class="collection-item"><div>Janeiro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                <li class="collection-item"><div>Fevereiro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                <li class="collection-item"><div>Março<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                <li class="collection-item"><div>Abril<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                <li class="collection-item"><div>Maio<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                <li class="collection-item"><div>Junho<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                <li class="collection-item"><div>Julho<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                <li class="collection-item"><div>Agosto<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                <li class="collection-item"><div>Setembro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                <li class="collection-item"><div>Outubro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                <li class="collection-item"><div>Novembro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                <li class="collection-item"><div>Dezembro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-
-              
-      
-            </ul>
-        </div>
-        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul class="table-of-contents">
+                        <label class="centered">Atividades do ano:</label>
+                        <select  class="browser-default">
+                            <option value="" disabled selected>Escolha o Ano</option>
+                            <option value="1">2018</option>
+                            <option value="2">2019</option>
+                            <option value="3">2020</option>
+                        </select>
+                        <li class="collection-item"><div>Jan<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                        <li class="collection-item"><div>Fevereiro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                        <li class="collection-item"><div>Março<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                        <li class="collection-item"><div>Abril<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                        <li class="collection-item"><div>Maio<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                        <li class="collection-item"><div>Junho<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                        <li class="collection-item"><div>Julho<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                        <li class="collection-item"><div>Agosto<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                        <li class="collection-item"><div>Setembro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                        <li class="collection-item"><div>Outubro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                        <li class="collection-item"><div>Novembro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                        <li class="collection-item"><div>Dezembro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
         
+                </ul>
 
-        <main class="container">
+            </div>
+            <div class="col m9">
            
-			<div class="z-depth-1 table-div">
-			    <table class="responsive-table centered">
-		            <thead>
-		                <tr>
-                            <th>Data</th>
-                            <th>Descrição</th>
-                            <th>Débito</th>
-                            <th>Crédito</th>
-                            <th>Saldo</th>		              
-		                </tr>
-                    </thead>
+			    <div class="z-depth-1 table-div">
+			        <table class="responsive-table centered">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Descrição</th>
+                                <th>Débito</th>
+                                <th>Crédito</th>
+                                <th>Saldo</th>		              
+                            </tr>
+                        </thead>
 
-		            <tbody   th:each="users : ${users}">
-		                <tr>          		         
-			                <td th:text="${users.nome}">...</td>
-				            <td th:text="${users.sobrenome}">...</td>
-				            <td th:text="${users.email}">...</td>
-                        </tr>
-                  					
-					<tbody>					   
-                </table>   
-                    <!--<td th:text="${lan.getNome()}"></td>
-                    th:each="lan : ${lan}"
+                        <tbody   th:each="lan : ${lan}">
+                            <tr>          		         
+                                <td th:text="${lan.data}"></td>
+                                <td th:text="${lan.descricao}"></td>
+                                <td style="background-color: rgb(126, 255, 103)">
+                                    <span th:if="${lan.operacao == 'ENTRADA'}"  th:text="${lan.valor}"></span>
+                                </td>
+                                <td style="background-color: rgb(255, 74, 74);">                             
+                                    <span th:if="${lan.operacao == 'SAIDA'}"  th:text="${lan.valor}"></span>
+                                </td>
+                                <td th:text="${lan.valor}"></td>
 
-                    <div th:switch="${lan.getNome}"> 
-                    
-                    <td style="background-color: red;" th:text="${lan.getValor()}" th:case="descricao"></td>
+                            </tr>
+                                        
+                        <tbody>					   
+                    </table>   
+                        <!--<td th:text="${lan.getNome()}"></td>
+                        th:each="lan : ${lan}"
 
-                    <td style="background-color: green;" th:text="${lan.getValor()}" th:case="E"></td></div>
+                        <div th:switch="${lan.getNome}"> 
+                        
+                        <td style="background-color: red;" th:text="${lan.getValor()}" th:case="descricao"></td>
 
-                    <td th:text="${lan.getValor()"></td>
-                    -->
-	        </div>
-       </main>
+                        <td style="background-color: green;" th:text="${lan.getValor()}" th:case="E"></td></div>
+
+                        <td th:text="${lan.getValor()"></td>
+                        -->
+                </div>
+        </main>
 
         <!-- Fim do Main -->
 
         <!--Início do Footer -->
-
-        <footer class="page-footer">
-                <div class="container">
+    
+    </body>
+    <footer class="page-footer">
+            <div class="container">
+                <div class="row">
                     <span style="color: black;"><b>©2020 Copyright: siscaixa.com.br</b></span>
                     <a class="text-lighten-4 right" style="color: black;" href="privacidade" method="get"><b>Política de Privacidade</b></a>
-                </div>
-        </footer>
+                </div>                
+            </div>
+    </footer>
 
         <!-- Fim do Footer -->
 
@@ -184,19 +195,10 @@
         <!-- JS p/ sidenav -->
         
         <script>  
-
-            //document.addEventListener('DOMContentLoaded', function() {
-            //    var elems = document.querySelectorAll('.sidenav');
-            //    var instances = M.Sidenav.init(elems, options);
-            //});           
-
             $(document).ready(function(){
-                $('.sidenav').sidenav({
-                 
+                $('.sidenav').sidenav({                 
                 });
             });
-
-
         </script>
 
         <style>
@@ -210,7 +212,34 @@
             .menus{
                 color: black;
             }
-        </style>
-    
-    </body>
+            .row{
+                margin: auto 30px 40px 20px;
+            }
+            .body{
+                display: flex;
+                flex-direction: column;
+                min-height: 100%;
+                background-color: #F6F6F6;
+            }
+            .page-footer{
+                margin-top: auto;
+            }
+            .collection-item{
+                margin: 8px auto;
+            }
+            .table-of-contents{
+                margin-top: 0px;
+            }
+            .material-icons{
+                color: green;
+            }
+            .page-footer{
+                background-color: gainsboro;
+            }
+            .browser-default{
+                background-color: #FFFF; 
+                border-radius: 8px;
+            }
+          
+        </style> 
 </html>

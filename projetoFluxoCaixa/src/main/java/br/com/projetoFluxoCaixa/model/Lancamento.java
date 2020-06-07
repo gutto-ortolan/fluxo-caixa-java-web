@@ -1,6 +1,7 @@
 package br.com.projetoFluxoCaixa.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -67,8 +68,10 @@ public class Lancamento implements Serializable{
 		this.valor = valor;
 	}
 
-	public Date getData() {
-		return data;
+	public String getData() {		
+		SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");    
+		String dataFormatada = fmt.format(this.data);
+		return dataFormatada;
 	}
 
 	public void setData(Date data) {
@@ -82,5 +85,7 @@ public class Lancamento implements Serializable{
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+	
 	
 }

@@ -1,5 +1,7 @@
 package br.com.projetoFluxoCaixa.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -64,7 +66,9 @@ public class UsuarioController {
 			session.setAttribute("usuarioLogado", usuarioPesquisa);			
 						
 			Lancamento lancamento = new Lancamento();
-			lancamento.setData(new Date());
+			Date suaData = new Date();
+			lancamento.setData(suaData);
+			
 			lancamento.setDescricao("luz");
 			lancamento.setOperacao("ENTRADA");
 			lancamento.setValor(50.0);
@@ -72,8 +76,7 @@ public class UsuarioController {
 			lr.save(lancamento);
 			
 			//Lancamento lancamentoPesquisa = lr.findUsuarioPorLancamento(1);
-			ra.addFlashAttribute("user", usuarioPesquisa);
-			ra.addFlashAttribute("users", ur.findAll());
+			ra.addFlashAttribute("lan", lancamento);
 	
 			return "redirect:/menu";
 		}
