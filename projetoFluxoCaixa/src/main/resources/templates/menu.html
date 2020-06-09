@@ -11,7 +11,7 @@
         <!--Import materialize.css-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-        <link type="text/css" rel="stylesheet" href="../static/styles.css"/>
+        <link type="text/css" rel="stylesheet" href="styles.css"/>
 
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
@@ -96,10 +96,12 @@
                 </ul>
 
             </div>
-            <div class="col m9">
+            <div class="col m9 ">
+              <a href="newLan" class="table-div btn-floating btn-large waves-effect waves-light #00e676 green accent-3"><i class="material-icons">add</i></a>
+            
            
 			    <div class="z-depth-1 table-div">
-			        <table class="responsive-table centered">
+			        <table class="centered striped">
                         <thead>
                             <tr>
                                 <th>Data</th>
@@ -111,17 +113,17 @@
                         </thead>
 
                         <tbody   th:each="lan : ${lan}">
-                            <tr>          		         
+                            <tr>
                                 <td th:text="${lan.data}"></td>
                                 <td th:text="${lan.descricao}"></td>
-                                <td style="background-color: rgb(126, 255, 103)">
+                                <td style="background-color: rgb(128, 255, 134)">
                                     <span th:if="${lan.operacao == 'ENTRADA'}"  th:text="${lan.valor}"></span>
                                 </td>
                                 <td style="background-color: rgb(255, 74, 74);">                             
                                     <span th:if="${lan.operacao == 'SAIDA'}"  th:text="${lan.valor}"></span>
                                 </td>
                                 <td th:text="${lan.valor}"></td>
-
+		
                             </tr>
                                         
                         <tbody>					   
@@ -153,7 +155,6 @@
                 </div>                
             </div>
     </footer>
-
         <!-- Fim do Footer -->
 
 
@@ -201,45 +202,5 @@
             });
         </script>
 
-        <style>
-            #slide-out{
-                padding: 0px 30px;
-                width: 250px;
-            }
-            .table-div{
-                margin-left: 250px;
-            }
-            .menus{
-                color: black;
-            }
-            .row{
-                margin: auto 30px 40px 20px;
-            }
-            .body{
-                display: flex;
-                flex-direction: column;
-                min-height: 100%;
-                background-color: #F6F6F6;
-            }
-            .page-footer{
-                margin-top: auto;
-            }
-            .collection-item{
-                margin: 8px auto;
-            }
-            .table-of-contents{
-                margin-top: 0px;
-            }
-            .material-icons{
-                color: green;
-            }
-            .page-footer{
-                background-color: gainsboro;
-            }
-            .browser-default{
-                background-color: #FFFF; 
-                border-radius: 8px;
-            }
-          
-        </style> 
+       
 </html>

@@ -31,12 +31,12 @@ public class DummyData {
 		usuario.setSenha("$2a$10$EKdGixjUS6VbgCn5pRQJ0upm5WuilxLjn2vsR6Kk9UIdJZWmDHhpS");
 		ur.save(usuario);
 		
-		/*Lancamento lancamento = new Lancamento();
+		Lancamento lancamento = new Lancamento();
 		lancamento.setData(new Date());
 		lancamento.setDescricao("teste");
 		lancamento.setOperacao("ENTRADA");
 		lancamento.setValor(50.0);
-		lr.save(lancamento);*/
+		lr.save(lancamento);
 		
 		
 	}

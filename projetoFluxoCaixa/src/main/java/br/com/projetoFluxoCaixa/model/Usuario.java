@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -18,7 +20,7 @@ public class Usuario implements Serializable {
     @Id
     @SequenceGenerator(name = "SEQUSUARIO", sequenceName = "SEQUSUARIO", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUSUARIO")
-    private Integer idUsuario;
+    private Integer id_usuario;
 
     private String nome;
 
@@ -27,13 +29,14 @@ public class Usuario implements Serializable {
     private String email;
 
     private String senha;
-
+      
+    
     public Integer getIdUsuario() {
-        return idUsuario;
+        return id_usuario;
     }
 
-    public void setIdUsuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdUsuario(Integer id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
     public String getNome() {

@@ -33,7 +33,7 @@ public class Lancamento implements Serializable{
 	private Date data;
 	
 	@ManyToOne
-    @JoinColumn(name="idUsuario")
+    @JoinColumn(name="id_usuario")
     private Usuario usuario;
 
 	public Integer getIdLancamento() {

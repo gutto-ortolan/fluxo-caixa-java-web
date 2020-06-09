@@ -33,6 +33,13 @@ public class LancamentoServiceImpl implements LancamentoService {
 	public List<Lancamento> findAll() {
 		return (List<Lancamento>) lr.findAll();
 	}
+
+	@Override
+	public List<Lancamento> findLancamentoPorUsuario(Integer id_usuario) {
+		return (List<Lancamento>)lr.findLancamentoPorUsuario(id_usuario);
+	}
+	
+	
 	
 	
 }
