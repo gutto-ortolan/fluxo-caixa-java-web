@@ -81,7 +81,67 @@
 
         <main class="container">
 
+            <br/>
+            <div class="wrapper">
+                <div class="col s7 m12" style="box-shadow: #d3d3d3 2px 2px 1px; background: white; border-radius: 10px; padding: 20px 20px 0px 20px">
+                    <form style="background: white; padding: 5px 20px 5px 20px;" method="POST" action="salvarPerfil" th:object="${usuario}">
+                        <div class="row">
+                            <form class="col s12">
+                                <div style="color: red;" th:text="${mensagem}" th:if="${mensagem != null}"></div>
+                                <input id="idUsuario" type="text" class="validate" style="display: none;" name="idUsuario" th:value="${session.usuarioLogado.idUsuario}">
+                                <div class="row">
+                                    <div class="input-field col s6">
+                                        <select>
+                                            <option value="1">Entrada</option>
+                                            <option value="2">Saída</option>
+                                        </select>
+                                        <label>Operação</label>
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <input type="date" class="datepicker">
+                                        <label>Data</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <form class="col s12">
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <textarea id="textarea1" class="materialize-textarea"></textarea>
+                                                <label for="textarea1">Descrição</label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
 
+                                <div class="row">
+                                    <div class="input-field col s12" style="margin-top: 0px;">
+                                        <input id="password" type="password" name="senha" class="validate">
+                                        <label for="password">Senha antiga</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s6" style="margin-top: 0px;">
+                                        <input id="password1" type="password" name="senha1" class="validate">
+                                        <label for="password1">Nova senha</label>
+                                    </div>
+                                    <div class="input-field col s6" style="margin-top: 0px;">
+                                        <input id="password2" type="password" name="senha2" class="validate">
+                                        <label for="password2">Confirme a senha</label>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 0px;">
+                                    <a class="waves-effect waves-light btn right" style="margin-left: 10px;" href="perfil" method="post">Cancelar</a>
+                                    <button type='submit'
+                                            name='btn_login'
+                                            class='waves-effect waves-light btn right'>Salvar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
 
 
 
@@ -91,10 +151,10 @@
         <!--Início do Footer -->
 
         <footer class="page-footer">
-                <div class="container">
-                    <span style="color: black;"><b>©2020 Copyright: caixadois.com.br</b></span>
-                    <a class="text-lighten-4 right" style="color: black;" href="privacidade" method="get"><b>Política de Privacidade</b></a>
-                </div>
+            <div class="container">
+                <span style="color: black;"><b>©2020 Copyright: caixadois.com.br</b></span>
+                <a class="text-lighten-4 right" style="color: black;" href="privacidade" method="get"><b>Política de Privacidade</b></a>
+            </div>
         </footer>
 
 
@@ -108,35 +168,51 @@
 
 
         <script>
-                        function init() {
-                            var cabecalho = document.querySelector('.cabecalho');
-                            var cabecalhoEspaco = document.querySelector('.cabecalho-espaco');
-                            var cabecalhoOffset = cabecalho.offsetTop;
+            function init() {
+                var cabecalho = document.querySelector('.cabecalho');
+                var cabecalhoEspaco = document.querySelector('.cabecalho-espaco');
+                var cabecalhoOffset = cabecalho.offsetTop;
 
-                            function verificaCabecalho() {
-                                var scrollTop = window.scrollY;
-                                var cabecalhoAltura = cabecalho.offsetHeight;
+                function verificaCabecalho() {
+                    var scrollTop = window.scrollY;
+                    var cabecalhoAltura = cabecalho.offsetHeight;
 
-                                if (scrollTop >= cabecalhoOffset) {
-                                    // rolagem da página passou do elemento, vamos fixá-lo
-                                    cabecalho.classList.add('cabecalho--fixo');
+                    if (scrollTop >= cabecalhoOffset) {
+                        // rolagem da página passou do elemento, vamos fixá-lo
+                        cabecalho.classList.add('cabecalho--fixo');
 
-                                    // ativa cabecalho-espaco para ocupar o espaço perdido
-                                    cabecalhoEspaco.style.height = cabecalhoAltura + 'px';
-                                } else {
-                                    // retira a classe adicional do elemento
-                                    cabecalho.classList.remove('cabecalho--fixo');
+                        // ativa cabecalho-espaco para ocupar o espaço perdido
+                        cabecalhoEspaco.style.height = cabecalhoAltura + 'px';
+                    } else {
+                        // retira a classe adicional do elemento
+                        cabecalho.classList.remove('cabecalho--fixo');
 
-                                    // retira a altura do cabecalho-espaco
-                                    cabecalhoEspaco.style.height = 0;
-                                }
-                            }
+                        // retira a altura do cabecalho-espaco
+                        cabecalhoEspaco.style.height = 0;
+                    }
+                }
 
-                            window.addEventListener('scroll', verificaCabecalho);
-                            window.addEventListener('resize', verificaCabecalho);
-                        }
+                window.addEventListener('scroll', verificaCabecalho);
+                window.addEventListener('resize', verificaCabecalho);
+            }
 
-                        window.addEventListener('load', init);
+            window.addEventListener('load', init);
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var elems = document.querySelectorAll('select');
+                var instances = M.FormSelect.init(elems, options);
+            });
+
+            // Or with jQuery
+
+            $(document).ready(function () {
+                $('select').formSelect();
+            });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var elems = document.querySelectorAll('.datepicker');
+                var instances = M.Datepicker.init(elems, options);
+            });
         </script>
 
 
