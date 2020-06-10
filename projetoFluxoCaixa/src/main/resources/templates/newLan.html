@@ -15,7 +15,6 @@
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-
     </head>
     <body style="background-color: #F6F6F6; ">
 
@@ -84,26 +83,25 @@
 		
 		<div class="wrapper">
 			<div class="col s7 m12" style="box-shadow: #d3d3d3 2px 2px 1px; background: white; border-radius: 10px; padding: 20px 20px 0px 20px">
-				<form style="background: white; padding: 20px 20px 5px 20px;">
+				<form method="POST" action="salvarLan" style="background: white; padding: 20px 20px 5px 20px;">
 					<div class="row" style="margin-bottom: 5px;">
-						<form class="col s12">
 							<div class="row" style="margin-left: 3px;">
 								<div class="input-field col s6 ">
-						          <input placeholder="valor" type="text" class="validate">
+						          <input placeholder="valor" id="valor" name="valor" type="text" class="validate">
 						          <label>Valor</label>
 						        </div>
 																
 									<div class="col s5" style="margin-left: 30px;">
 									    <p>
 									      <label>
-       										 <input name="group1" type="radio"  />
+       										 <input id="ENTRADA" name="operacao" value="ENTRADA" type="radio"  />
 									        <span>Entrada<i class="material-icons right menus" style="margin-left: 12px; color: green;" >trending_up</i></span>
 	                            
 									      </label>
 									    </p>
 									    <p>
 									      <label>
-        									<input name="group1" type="radio" />
+        									<input id="SAIDA" name="operacao" value="SAIDA" type="radio" />
 									        <span>Saída<i class="material-icons right menus" style="margin-left: 12px; color: red; ">trending_down</i></span>
 	                           
 									      </label>
@@ -113,24 +111,23 @@
 								  </div>
 							</div>
 								<div class="input-field inline col s12">
-						          <input id="email_inline" placeholder="descrição" type="text" class="validate">
+						          <input id="descricao" placeholder="descrição" name="descricao" type="text" class="validate">
 						          <label>Descrição</label>
 						        </div>
 								<div class="input-field col s6">
-									<a href="menu" method="POST" class="disabled waves-effect waves-light btn">Agendar para:</a>
+									<button type="submit" id="agendar" class="disabled waves-effect waves-light btn green z-depth-1 y-depth-1">Agendar para:</button>
 
 								</div>
 
 								<div class="input-field inline col s6">
-									<a href="menu" method="POST" class="waves-effect waves-light btn green right">Lançar agora!</a>
+									<button type="submit" class="waves-effect waves-light btn green right z-depth-1 y-depth-1">Lançar agora!</button>
 									
 									
 								</div>
 								  <div class="input-field col s7">
-									<input placeholder="Data" type="date" class="validate">
+									<input placeholder="Data" id="data" type="date" name="data" class="validate">
 								    <label>Valor</label>
 								</div>
-						</form>
 					</div>
 				</form>
 			</div>

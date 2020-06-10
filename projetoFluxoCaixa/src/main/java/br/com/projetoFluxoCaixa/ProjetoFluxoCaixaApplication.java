@@ -8,6 +8,7 @@ public class ProjetoFluxoCaixaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetoFluxoCaixaApplication.class, args);
+		
 	}
 
 }

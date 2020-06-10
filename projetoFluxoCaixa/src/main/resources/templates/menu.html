@@ -97,8 +97,9 @@
 
             </div>
             <div class="col m9 ">
-              <a href="newLan" class="table-div btn-floating btn-large waves-effect waves-light #00e676 green accent-3"><i class="material-icons">add</i></a>
-            
+            	<form method="GET" action="newLan">
+            	   	<button data-position="top" data-tooltip="Adicionar um lançamento" type="submit" id="agendar" class="tooltipped table-div btn-floating btn-large waves-effect waves-light #00e676 green accent-3"><i class="material-icons">add</i></button>
+            	</form>            
            
 			    <div class="z-depth-1 table-div">
 			        <table class="centered striped">
@@ -201,6 +202,12 @@
                 });
             });
         </script>
+        
+        <script> 
+        	$(document).ready(function(){
+   				$('.tooltipped').tooltip();
+        	});
+       </script>
 
        
 </html>

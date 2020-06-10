@@ -36,11 +36,7 @@ public class UsuarioController {
 	public String entrar() {
 		return "login";
 	}
-	@RequestMapping("/newLan")
-	public String newLan() {
-		return "newLan";
-	}
-	
+
 	@RequestMapping("/cadastro")
 	public String cadastrar() {
 		return "cadastro";
@@ -48,8 +44,9 @@ public class UsuarioController {
 	
 	@RequestMapping("/menu")
 	public String menu(HttpSession session, RedirectAttributes ra) {
-		System.out.println(session);
 		
+		//É preciso trazer o usuario para trazer seus lançamentos e mostrá-los no "menu" já filtrados
+
 		return "menu";
 		
 	}	
@@ -59,15 +56,15 @@ public class UsuarioController {
 		
 		
 		Usuario usuarioPesquisa = ur.findUsuarioPorEmail(email, senha);
-		System.out.println(usuarioPesquisa);
 		
 		if(usuarioPesquisa == null) {
 			ra.addFlashAttribute("mensagem", "E-mail ou senha inválido.");
 			ra.addFlashAttribute("email", email);
 			return "redirect:/login";
 		}else {
-			session.setAttribute("usuarioLogado", usuarioPesquisa);			
-						
+			session.setAttribute("usuarioLogado", usuarioPesquisa);	
+			
+			//	Teste adiona lan	
 			Lancamento lancamento = new Lancamento();
 			Date suaData = new Date();
 			lancamento.setData(suaData);			
@@ -105,7 +102,7 @@ public class UsuarioController {
 
 
 	}
+}
 	
 	
 
-}
