@@ -28,7 +28,7 @@ public class LancamentoController {
     }
 
 
-    /* Cadastrar um lançamento no banco - apresenta falha de menu.html já foi commitado e o status code está errado
+    /* Cadastrar um lançamento no banco
 	
      */
     @RequestMapping(value = "/salvarLan", method = RequestMethod.POST)

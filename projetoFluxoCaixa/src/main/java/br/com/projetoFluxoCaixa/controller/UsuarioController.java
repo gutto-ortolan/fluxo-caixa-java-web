@@ -43,10 +43,8 @@ public class UsuarioController {
 	}	
 	
 	@RequestMapping("/menu")
-	public String menu(HttpSession session, RedirectAttributes ra) {
-		
-		//É preciso trazer o usuario para trazer seus lançamentos e mostrá-los no "menu" já filtrados
-
+	public String menu(HttpSession session, RedirectAttributes ra) {		
+	
 		return "menu";
 		
 	}	
@@ -61,20 +59,9 @@ public class UsuarioController {
 			ra.addFlashAttribute("email", email);
 			return "redirect:/login";
 		}else {
-			session.setAttribute("usuarioLogado", usuarioPesquisa);	
-			
-			//	Teste adiona lan	
-			/*Lancamento lancamento = new Lancamento();
-			Date suaData = new Date();
-			lancamento.setData(suaData);			
-			lancamento.setDescricao("Dizimo");
-			lancamento.setOperacao("SAIDA");
-			lancamento.setValor(200.0);
-			lancamento.setUsuario(usuarioPesquisa);
-			lr.save(lancamento);*/
-			
-			List<Lancamento> lancamentoPesquisa= lr.findLancamentoPorUsuario(usuarioPesquisa.getIdUsuario());
-			
+			session.setAttribute("usuarioLogado", usuarioPesquisa);				
+						
+			List<Lancamento> lancamentoPesquisa= lr.findLancamentoPorUsuario(usuarioPesquisa.getIdUsuario());			
 			ra.addFlashAttribute("lan", lancamentoPesquisa);	
 			return "redirect:/menu";
 		}
@@ -98,7 +85,6 @@ public class UsuarioController {
 		ra.addFlashAttribute("sobrenome", usuario.getSobrenome());
 		ra.addFlashAttribute("email", usuario.getEmail());	
 		return "redirect:/cadastro";
-
 
 	}
 }
