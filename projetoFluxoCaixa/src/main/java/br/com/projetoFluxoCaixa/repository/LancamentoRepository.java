@@ -1,7 +1,7 @@
 package br.com.projetoFluxoCaixa.repository;
 
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,6 +15,6 @@ import br.com.projetoFluxoCaixa.model.Lancamento;
 public interface LancamentoRepository extends CrudRepository<Lancamento, Integer>{
 		
 	@Query("select l from Lancamento l where id_usuario = ?1")
-	List<Lancamento> findLancamentoPorUsuario(Integer id_usuario);
+	ArrayList<Lancamento> findLancamentoPorUsuario(Integer id_usuario);
 
 }

@@ -92,21 +92,21 @@
 									<label>Valor</label>
 								</div>
 								<div class="input-field col s4">
-									<select class="browser-default">
+									<select name="operacao" id="operacao" class="browser-default">
 										<option value="" disabled selected>Selecione a opção</option>
 										<option value="ENTRADA">Entrada</option>
 										<option value="SAIDA">Saída</option>
 									</select>
 								</div>
 								<div class="input-field col s4">
-									<input type="date" id="data" lass="datepicker"> <label>Data</label>
+									<input type="date" id="data" name="data" class="datepicker"> <label>Data</label>
 
 								</div>
 							</div>
 
-								<form class="col s12">
+								<form class="col s12" method="POST" action="programarLan">
 									<div class="input-field col s6 outer">
-										<textarea id="textarea1" class="materialize-textarea"></textarea>
+										<textarea id="descricao" name="descricao" class="materialize-textarea"></textarea>
 										<label for="textarea1">Descrição</label>
 										<div class="inner">
 											<button type='submit' name='btn_login' id="programar"
@@ -121,7 +121,7 @@
 
 												</div>
 												<div class="inner">												
-												<button type='submit' name='btn_login' id="programar"
+												<button type='submit' name='programar' id="programar"
 													class='waves-effect waves-light btn right' >Programar</button>
 												</div>
 											</div>
@@ -155,8 +155,6 @@
 	</footer>
 
 	<!-- Fim do Footer -->
-
-
 
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script
@@ -195,7 +193,7 @@
 
 		window.addEventListener('load', init);
 		
-		</script>
+	</script>
 
 	<script>
 	//controle de proximos meses para programação de lançamentos
@@ -221,7 +219,5 @@
 		document.getElementById('mesFinal').setAttribute('min', d);		
 	});	
 	</script>
-
-
 </body>
 </html>

@@ -1,7 +1,9 @@
 package br.com.projetoFluxoCaixa.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,27 +36,26 @@ public class LancamentoController {
     @RequestMapping(value = "/salvarLan", method = RequestMethod.POST)
     public String salvarLan(@RequestParam("valor") Double valor,
             @RequestParam("descricao") String descricao,
-            @RequestParam("data") String data,
-            //@RequestParam("operacao") String operacao,
-            RedirectAttributes ra, HttpSession session) {
-        Lancamento lancamento = new Lancamento();
-        lancamento.setData(new Date());
-        lancamento.setDescricao(descricao);
-        lancamento.setOperacao("ENTRADA");
-        lancamento.setValor(valor);
-        
+            @RequestParam("data") String dataString,
+            @RequestParam("operacao") String operacao,
+            RedirectAttributes ra, HttpSession session) throws ParseException {
+    	
+    	
         Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
-        
+
+    	String formato = "yyyy-MM-dd";
+    	Date dataDate = new SimpleDateFormat(formato).parse(dataString);    	
+
+        Lancamento lancamento = new Lancamento();
+        lancamento.setData(dataDate);
+        lancamento.setDescricao(descricao);
+        lancamento.setOperacao(operacao);
+        lancamento.setValor(valor);
         lancamento.setUsuario(usuario);
 
         lr.save(lancamento);
-
-        System.out.println(lancamento.getValor());
-
-        List<Lancamento> lancamentoPesquisa = lr.findLancamentoPorUsuario(usuario.getIdUsuario());
-
-        ra.addFlashAttribute("lan", lancamentoPesquisa);
-        return "menu";
+        
+        return "redirect:/menu";
 
     }
 }

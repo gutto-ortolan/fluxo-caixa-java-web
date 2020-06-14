@@ -1,6 +1,6 @@
 package br.com.projetoFluxoCaixa.controller;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -42,10 +42,20 @@ public class UsuarioController {
 		return "cadastro";
 	}	
 	
-	@RequestMapping("/menu")
-	public String menu(HttpSession session, RedirectAttributes ra) {		
-	
+	@RequestMapping("/menuPrincipal")
+	public String menuPrincipal(HttpSession session, RedirectAttributes ra) {	
 		return "menu";
+		
+	}	
+	
+	@RequestMapping("/menu")
+	public String menu(HttpSession session, RedirectAttributes ra) {	
+		
+        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");		
+		ArrayList<Lancamento> lancamentoPesquisa= lr.findLancamentoPorUsuario(usuario.getIdUsuario());	
+		ra.addFlashAttribute("lan", lancamentoPesquisa);
+		ra.addFlashAttribute("saldo", "100");
+		return "redirect:/menuPrincipal";
 		
 	}	
 		
@@ -59,10 +69,7 @@ public class UsuarioController {
 			ra.addFlashAttribute("email", email);
 			return "redirect:/login";
 		}else {
-			session.setAttribute("usuarioLogado", usuarioPesquisa);				
-						
-			List<Lancamento> lancamentoPesquisa= lr.findLancamentoPorUsuario(usuarioPesquisa.getIdUsuario());			
-			ra.addFlashAttribute("lan", lancamentoPesquisa);	
+			session.setAttribute("usuarioLogado", usuarioPesquisa);	
 			return "redirect:/menu";
 		}
 	}

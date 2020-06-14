@@ -80,7 +80,7 @@
                         <option value="2">2019</option>
                         <option value="3">2020</option>
                     </select>
-                    <li class="collection-item"><div>Jan<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+                    <li class="collection-item"><div>Janeiro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
                     <li class="collection-item"><div>Fevereiro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
                     <li class="collection-item"><div>Março<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
                     <li class="collection-item"><div>Abril<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
@@ -104,7 +104,7 @@
                         <thead>
                         	<tr><td></td><td></td><td></td>
                         		<td class="saldoInicial1">Saldo Inicial do Mês:</td>
-                        		<td class="saldoInicial2"><i class="material-icons">attach_money</i></br>1200</td>
+                        		<td id="saldoInicial"  th:text="${saldo}" class="saldoInicial2"><i class="material-icons">attach_money</i></br></td>
                         	
                             <tr>
                                 <th>Data</th>
@@ -118,17 +118,23 @@
                             <tr>
                                 <td th:text="${lan.data}"></td>
                                 <td th:text="${lan.descricao}"></td>
-                                <td style="background-color: rgb(128, 255, 134)">
-                                    <span th:if="${lan.operacao == 'ENTRADA'}"  th:text="${lan.valor}"></span>
+                                <td  style="background-color: rgb(128, 255, 134)">
+                                    <span id="valorPositivo" th:if="${lan.operacao == 'ENTRADA'}"  th:text="${lan.valor}"></span>
                                 </td>
-                                <td style="background-color: rgb(255, 74, 74);">                             
-                                    <span th:if="${lan.operacao == 'SAIDA'}"  th:text="${lan.valor}"></span>
+                                <td  style="background-color: rgb(255, 74, 74);">                             
+                                    <span id="valorNegativo" th:if="${lan.operacao == 'SAIDA'}"  th:text="${lan.valor}"></span>
                                 </td>
-                                <td th:text="${lan.valor}"></td>
+                                <td onfocus ="saldoCorrido()" id="saldoCorrido"  name="saldoCorrido" ></td>
+
+                                <!--th:text="${$('#saldoCorrido').text($'('saldoInicial').html())}"-->
 
                             </tr>
-
-                        <tbody>		
+                        <tbody>	
+                            <tr style="margin-top: 120px;"><td></td><td></td><td></td>
+                        		<td style="margin-top: 120px;" class="saldoInicial1">Saldo Final do Mês:</td>
+                        		<td id="saldoFinal"  th:text="${saldoFinal}" class="saldoInicial2"><i class="material-icons">attach_money</i></br></td>
+                        	
+                            <tr>	
                     </table>			   
                   </div>
                 </div>
@@ -157,7 +163,6 @@
                 var cabecalho = document.querySelector('.cabecalho');
                 var cabecalhoEspaco = document.querySelector('.cabecalho-espaco');
                 var cabecalhoOffset = cabecalho.offsetTop;
-
                 function verificaCabecalho() {
                     var scrollTop = window.scrollY;
                     var cabecalhoAltura = cabecalho.offsetHeight;
@@ -188,9 +193,33 @@
             $(document).ready(function () {
                 $('.sidenav').sidenav({
                 });
+                var saldoInicial = (parseFloat($("#saldoInicial").html()));
+                var valorPositivo = (parseFloat($("#valorPositivo").html()));
+                var valorNegativo = (parseFloat($("#valorNegativo").html()));
+
+                //var saldoCorrido = saldoInicial + valorPositivo;
+                var saldoCorrido = saldoInicial + valorNegativo;
+
+                console.log(saldoCorrido);
+                $('#saldoCorrido').html(saldoCorrido);
+
+                //var saldoInicial = document.getElementById("saldoInicial");
+                //console.log(saldoInicial.html().text());
             });
         </script>
-        
+        <script>
+
+          $('.dropdown-trigger').dropdown();
+        </script>
+
+        <script>
+            function saldoCorrido(){
+                $('#saldoCorrido').text($("#saldoInicial").html());
+                console.log("Teste");
+
+            }  
+        </script>
+
 
     </body>
 
