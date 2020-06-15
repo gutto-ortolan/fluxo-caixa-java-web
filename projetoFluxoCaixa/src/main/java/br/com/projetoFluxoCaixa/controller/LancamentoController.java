@@ -28,11 +28,7 @@ public class LancamentoController {
     public String newLan(HttpSession session, RedirectAttributes ra) {
         return "newLan";
     }
-
-
-    /* Cadastrar um lançamento no banco
-	
-     */
+    
     @RequestMapping(value = "/salvarLan", method = RequestMethod.POST)
     public String salvarLan(@RequestParam("valor") Double valor,
             @RequestParam("descricao") String descricao,
@@ -53,9 +49,24 @@ public class LancamentoController {
         lancamento.setValor(valor);
         lancamento.setUsuario(usuario);
 
-        lr.save(lancamento);
-        
+        lr.save(lancamento);        
         return "redirect:/menu";
 
     }
+    /*
+     * Falha ao coletar dados do menu.html - metodo chamado para filtrar por mes e ano escolhido
+     
+    @RequestMapping(value = "/filtrarLanPorMes", method = RequestMethod.POST)
+    public String filtrarLanPorMes(@RequestParam("saldoFinal") String saldoFinal,
+            @RequestParam("saldoInicial") String saldoInicial,
+            @RequestParam("mes") String mes,
+            @RequestParam("ano") String ano,
+            RedirectAttributes ra, HttpSession session) {
+    	
+    	System.out.println("teste filtro");
+    	return "newLan";
+    	    	
+    	
+    }*/
+    
 }

@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import br.com.projetoFluxoCaixa.model.Lancamento;
 import br.com.projetoFluxoCaixa.repository.LancamentoRepository;
 
-
-
 @Service
 public class LancamentoServiceImpl implements LancamentoService {
 	
@@ -38,8 +36,5 @@ public class LancamentoServiceImpl implements LancamentoService {
 	public List<Lancamento> findLancamentoPorUsuario(Integer id_usuario) {
 		return (List<Lancamento>)lr.findLancamentoPorUsuario(id_usuario);
 	}
-	
-	
-	
 	
 }

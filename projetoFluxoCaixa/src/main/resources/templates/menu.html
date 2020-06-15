@@ -71,40 +71,39 @@
         <!-- Bloco de filtros a esquerda -->
         <main class="row">
             <div class="col s2 target m2">
-
-                <ul class="table-of-contents">
-                    <label class="centered">Atividades do ano:</label>
-                    <select  class="browser-default">
-                        <option value="" disabled selected>Escolha o Ano</option>
-                        <option value="1">2018</option>
-                        <option value="2">2019</option>
-                        <option value="3">2020</option>
-                    </select>
-                    <li class="collection-item"><div>Janeiro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                    <li class="collection-item"><div>Fevereiro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                    <li class="collection-item"><div>Março<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                    <li class="collection-item"><div>Abril<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                    <li class="collection-item"><div>Maio<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                    <li class="collection-item"><div>Junho<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                    <li class="collection-item"><div>Julho<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                    <li class="collection-item"><div>Agosto<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                    <li class="collection-item"><div>Setembro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                    <li class="collection-item"><div>Outubro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                    <li class="collection-item"><div>Novembro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-                    <li class="collection-item"><div>Dezembro<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
-
-                </ul>
-
+	 			<form method="POST" action="filtrarLanPorMes">
+	                <ul class="table-of-contents">
+	                    <label class="centered">Atividades do ano:</label>
+	                    <select name="ano" class="browser-default">
+	                        <option value="" disabled selected>Escolha o Ano</option>
+	                        <option value="2018">2018</option>
+	                        <option value="2019">2019</option>
+	                        <option value="2020">2020</option>
+	                    </select>
+	                    <li class="collection-item"><div>Janeiro<button type='submit' class="secondary-content"><i class="material-icons">send</i></button></div></li>
+	                    <li class="collection-item"><div name="mes">Fevereiro<button type='submit' class="secondary-content"><i class="material-icons">send</i></button></div></li>
+	                    <li class="collection-item"><div>Março<button type='submit' class="secondary-content"><i class="material-icons">send</i></button></div></li>
+	                    <li class="collection-item"><div>Abril<button type='submit' class="secondary-content"><i class="material-icons">send</i></button></div></li>
+	                    <li class="collection-item"><div>Maio<button type='submit' class="secondary-content"><i class="material-icons">send</i></button></div></li>
+	                    <li class="collection-item"><div>Junho<button type='submit' class="secondary-content"><i class="material-icons">send</i></button></div></li>
+	                    <li class="collection-item"><div>Julho<button type='submit' class="secondary-content"><i class="material-icons">send</i></button></div></li>
+	                    <li class="collection-item"><div>Agosto<button type='submit' class="secondary-content"><i class="material-icons">send</i></button></div></li>
+	                    <li class="collection-item"><div>Setembro<button type='submit' class="secondary-content"><i class="material-icons">send</i></button></div></li>
+	                    <li class="collection-item"><div>Outubro<button type='submit' class="secondary-content"><i class="material-icons">send</i></button></div></li>
+	                    <li class="collection-item"><div>Novembro<button type='submit' class="secondary-content"><i class="material-icons">send</i></button></div></li>
+	                    <li class="collection-item"><div>Dezembro<button type='submit' class="secondary-content"><i class="material-icons">send</i></button></div></li>
+	
+	                </ul>
+				</form>
             </div>
             <div class="col m9 ">
             	
-            
                 <div class="z-depth-1 table-div">
                     <table class="centered striped">
                         <thead>
                         	<tr><td></td><td></td><td></td>
-                        		<td class="saldoInicial1">Saldo Inicial do Mês:</td>
-                        		<td id="saldoInicial"  th:text="${saldo}" class="saldoInicial2"><i class="material-icons">attach_money</i></br></td>
+                        		<td class="descricaoSaldo">Saldo Inicial do Mês:</td>
+                        		<td id="saldoInicial" name="saldoInicial" th:text="${saldo}" class="valorSaldo"><i class="material-icons">attach_money</i></br></td>
                         	
                             <tr>
                                 <th>Data</th>
@@ -114,26 +113,25 @@
                                 <th>Saldo</th>		              
                             </tr>
                         </thead>
-                        <tbody   th:each="lan : ${lan}">
+                        <tbody th:each="lan : ${lan}" >
                             <tr>
                                 <td th:text="${lan.data}"></td>
                                 <td th:text="${lan.descricao}"></td>
                                 <td  style="background-color: rgb(128, 255, 134)">
                                     <span id="valorPositivo" th:if="${lan.operacao == 'ENTRADA'}"  th:text="${lan.valor}"></span>
                                 </td>
-                                <td  style="background-color: rgb(255, 74, 74);">                             
+                                <td style="background-color: rgb(255, 74, 74);">                             
                                     <span id="valorNegativo" th:if="${lan.operacao == 'SAIDA'}"  th:text="${lan.valor}"></span>
                                 </td>
-                                <td onfocus ="saldoCorrido()" id="saldoCorrido"  name="saldoCorrido" ></td>
+                                <td  id="saldoCorrido" name="saldoCorrido" ></td>
 
                                 <!--th:text="${$('#saldoCorrido').text($'('saldoInicial').html())}"-->
 
                             </tr>
                         <tbody>	
-                            <tr style="margin-top: 120px;"><td></td><td></td><td></td>
-                        		<td style="margin-top: 120px;" class="saldoInicial1">Saldo Final do Mês:</td>
-                        		<td id="saldoFinal"  th:text="${saldoFinal}" class="saldoInicial2"><i class="material-icons">attach_money</i></br></td>
-                        	
+                            <tr><td></td><td></td><td></td>
+                        		<td class="descricaoSaldo">Saldo Final do Mês:</td>
+                        		<td id="saldoFinal" class="valorSaldo"><i class="material-icons">attach_money</i></br></td>                        	
                             <tr>	
                     </table>			   
                   </div>
@@ -197,14 +195,17 @@
                 var valorPositivo = (parseFloat($("#valorPositivo").html()));
                 var valorNegativo = (parseFloat($("#valorNegativo").html()));
 
+                
+                
                 //var saldoCorrido = saldoInicial + valorPositivo;
                 var saldoCorrido = saldoInicial + valorNegativo;
 
                 console.log(saldoCorrido);
                 $('#saldoCorrido').html(saldoCorrido);
+                $('#saldoFinal').html(saldoCorrido);
 
+                
                 //var saldoInicial = document.getElementById("saldoInicial");
-                //console.log(saldoInicial.html().text());
             });
         </script>
         <script>
@@ -216,11 +217,7 @@
             function saldoCorrido(){
                 $('#saldoCorrido').text($("#saldoInicial").html());
                 console.log("Teste");
-
             }  
         </script>
-
-
     </body>
-
 </html>
