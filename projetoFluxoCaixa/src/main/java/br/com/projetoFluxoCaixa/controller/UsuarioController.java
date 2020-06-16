@@ -44,18 +44,35 @@ public class UsuarioController {
 	
 	@RequestMapping("/menuPrincipal")
 	public String menuPrincipal(HttpSession session, RedirectAttributes ra) {	
-		return "menu";
+		
+		Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
+		
+		if(usuario == null) {
+			ra.addFlashAttribute("mensagem", "É necessário logar para essa ação.");
+   		 	return "redirect:/login";
+		}else {
+			return "menu";
+		}
+		
+		
 		
 	}	
 	
-	@RequestMapping("/menu")
+	@RequestMapping(value="/menu", method=RequestMethod.GET)
 	public String menu(HttpSession session, RedirectAttributes ra) {	
 		
-        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");		
-		ArrayList<Lancamento> lancamentoPesquisa= lr.findLancamentoPorUsuario(usuario.getIdUsuario());	
-		ra.addFlashAttribute("lan", lancamentoPesquisa);
-		ra.addFlashAttribute("saldo", "100");
-		return "redirect:/menuPrincipal";
+        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");	
+        
+        if(usuario == null) {
+        	ra.addFlashAttribute("mensagem", "É necessário logar para essa ação.");
+   		 	return "redirect:/login";
+        }else {
+        	ArrayList<Lancamento> lancamentoPesquisa= lr.findLancamentoPorUsuario(usuario.getIdUsuario());	
+    		ra.addFlashAttribute("lan", lancamentoPesquisa);
+    		ra.addFlashAttribute("saldo", "100");
+    		return "redirect:/menuPrincipal";
+        }
+        
 		
 	}	
 		
@@ -69,7 +86,8 @@ public class UsuarioController {
 			ra.addFlashAttribute("email", email);
 			return "redirect:/login";
 		}else {
-			session.setAttribute("usuarioLogado", usuarioPesquisa);	
+			session.setAttribute("usuarioLogado", usuarioPesquisa);
+			session.setAttribute("controlador", false);
 			return "redirect:/menu";
 		}
 	}

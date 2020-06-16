@@ -40,8 +40,15 @@ public class MenuController {
     }
 
     @RequestMapping("/editar-perfil")
-    public String editarPerfil() {
-        return "editar-perfil";
+    public String editarPerfil(RedirectAttributes ra, HttpSession session) {
+    	Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+    	if(usuarioLogado == null) {
+    		ra.addFlashAttribute("mensagem", "É necessário logar para essa ação.");
+   		 	return "redirect:/login";
+    	}else {
+    		return "editar-perfil";
+    	}
+        
     }
 
     @RequestMapping("/salvarPerfil")
