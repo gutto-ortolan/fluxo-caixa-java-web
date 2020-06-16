@@ -161,6 +161,7 @@
                 var cabecalho = document.querySelector('.cabecalho');
                 var cabecalhoEspaco = document.querySelector('.cabecalho-espaco');
                 var cabecalhoOffset = cabecalho.offsetTop;
+
                 function verificaCabecalho() {
                     var scrollTop = window.scrollY;
                     var cabecalhoAltura = cabecalho.offsetHeight;
@@ -179,11 +180,13 @@
                         cabecalhoEspaco.style.height = 0;
                     }
                 }
+
                 window.addEventListener('scroll', verificaCabecalho);
                 window.addEventListener('resize', verificaCabecalho);
             }
+
             window.addEventListener('load', init);
-        </script>   
+        </script>
 
         <!-- JS p/ sidenav -->
 
@@ -208,10 +211,10 @@
                 //var saldoInicial = document.getElementById("saldoInicial");
             });
         </script>
-        <script>
+        <!-- <script>
 
           $('.dropdown-trigger').dropdown();
-        </script>
+        </script> -->
 
         <script>
             function saldoCorrido(){

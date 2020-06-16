@@ -9,9 +9,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.projetoFluxoCaixa.model.Lancamento;
@@ -43,7 +46,7 @@ public class LancamentoController {
     	Date dataDate = new SimpleDateFormat(formato).parse(dataString);    	
 
         Lancamento lancamento = new Lancamento();
-        lancamento.setData(dataDate);
+        lancamento.setDataLancamento(dataDate);
         lancamento.setDescricao(descricao);
         lancamento.setOperacao(operacao);
         lancamento.setValor(valor);
@@ -69,4 +72,20 @@ public class LancamentoController {
     	
     }*/
     
+    
+    @RequestMapping("/manutencao-lancamento")
+    public String manutencaoLancamento(HttpSession session, RedirectAttributes ra) {	
+        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");		
+		ArrayList<Lancamento> lancamentoPesquisa= lr.findLancamentoPorUsuario(usuario.getIdUsuario());
+		session.setAttribute("lancamentos", lancamentoPesquisa);
+		ra.addFlashAttribute("lan", lancamentoPesquisa);
+		
+		return "manutencao-lancamento";
+    }
+    
+    @GetMapping("/excluirLancamento/{idlan}")
+    public String excluirLancamento(HttpSession session, RedirectAttributes ra, @PathVariable("idlan") Integer idlan) {
+    	lr.deleteById(idlan);
+    	return "redirect:/manutencao-lancamento";
+    }
 }
