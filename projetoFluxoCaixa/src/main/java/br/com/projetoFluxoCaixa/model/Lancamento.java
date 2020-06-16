@@ -30,7 +30,7 @@ public class Lancamento implements Serializable {
 
     private Double valor;
 
-    private Date dataLancamento;
+    private Date data;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
@@ -68,14 +68,14 @@ public class Lancamento implements Serializable {
         this.valor = valor;
     }
 
-    public String getDataLancamento() {
+    public String getData() {
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-        String dataFormatada = fmt.format(this.dataLancamento);
+        String dataFormatada = fmt.format(this.data);
         return dataFormatada;
     }
 
-    public void setDataLancamento(Date dataLancamento) {
-        this.dataLancamento = dataLancamento;
+    public void setData(Date data) {
+        this.data = data;
     }
 
     public Usuario getUsuario() {

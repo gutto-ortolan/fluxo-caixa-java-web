@@ -46,7 +46,7 @@ public class LancamentoController {
     	Date dataDate = new SimpleDateFormat(formato).parse(dataString);    	
 
         Lancamento lancamento = new Lancamento();
-        lancamento.setDataLancamento(dataDate);
+        lancamento.setData(dataDate);
         lancamento.setDescricao(descricao);
         lancamento.setOperacao(operacao);
         lancamento.setValor(valor);
