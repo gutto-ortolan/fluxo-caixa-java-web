@@ -3,7 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <head>
         <meta charset="UTF-8"/>
-        <title>Política de Privacidade</title>
+        <title>Fluxo Caixa</title>
+<link rel="sortcut icon" href="imagens/logo.png"/>
 
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -28,14 +29,12 @@
 
             <nav>
                 <div class="nav-wrapper" style="background-color: #FFFF; ">
-                    <a href="menu" method="get" class="brand-logo">
+                    <a href="menu" class="brand-logo">
                         <img src="imagens/logo.png" class="responsive-img" style="width: 60px; margin-left: 10px">
                     </a>
                     <ul id="navbar-items" class="right hide-on-med-and-down" style="margin-right: 10px;">
                         <li>
-                            <a href="menu" method="get" class="menus">Menu</a></li>
-                        </li>
-                        <li>
+
                             <a class="dropdown-trigger" data-target="dropdown-lanc" href="#">
                                 <span class="menus">Lançamentos</span>
                                 <i class="material-icons right menus" style="margin-left: 1px;">arrow_drop_down</i>
@@ -43,14 +42,12 @@
 
                             <!-- Dropdown -->
                             <ul id="dropdown-lanc" class="dropdown-content">
-                                <li><a href="#!"><span class="menus">Novo</span></a></li>
-                                <li><a href="#!"><span class="menus">Editar/Excluir</span></a></li>
-                                <li><a href="#!"><span class="menus">Programar</span></a></li>
+                                <li><a href="newLan"><span class="menus">Novo</span></a></li>
+                                <li><a href="manutencao-lancamento"><span class="menus">Editar/Excluir</span></a></li>
+                                <li><a href="programarLancamento"><span class="menus">Programar</span></a></li>
                             </ul>
-
-
                         </li>
-                        <li><a href="#" class="menus">Extratos</a></li>
+                        <li><a href="extratos" class="menus">Extratos</a></li>
                         <li>
                             <a class="dropdown-trigger" data-target="dropdown-menu" href="#">
                                 <span class="menus" th:text="${session.usuarioLogado.nome}"></span>
@@ -60,15 +57,15 @@
 
                             <!-- Dropdown -->
                             <ul id="dropdown-menu" class="dropdown-content">
-                                <li><a href="#!"><span class="menus">Perfil</span><i class="material-icons left menus" style="margin-right: 4px;">account_box</i></a></li>
-                                <li><a href="#!"><span class="menus">Config.</span><i class="material-icons left menus" style="margin-right: 4px;">build</i></a></li>
+                                <li><a href="perfil"><span class="menus">Perfil</span><i class="material-icons left menus" style="margin-right: 4px;">account_box</i></a></li>
                                 <li class="divider"></li>
-                                <li><a href="#!"><span class="menus">Sair</span><i class="material-icons left menus" style="margin-right: 4px;">exit_to_app</i></a></li>
+                                <li><a href="logout"><span class="menus">Sair</span><i class="material-icons left menus" style="margin-right: 4px;">exit_to_app</i></a></li>
                             </ul>
                         </li>
                     </ul>
                 </div>
-            </nav>
+            </nav>            
+
         </header>
         <div class="cabecalho-espaco"><br/></div>
 
@@ -106,11 +103,11 @@
         <!-- Fim do Main -->
         <!--Início do Footer -->
 
-        <footer class="page-footer">
-                <div class="container">
-                    <span style="color: black;"><b>©2020 Copyright: caixadois.com.br</b></span>
-                    <a class="text-lighten-4 right" style="color: black;" href="privacidade" method="get"><b>Política de Privacidade</b></a>
-                </div>
+       <footer class="page-footer">
+            <div class="container">
+                <span style="color: black;"><b>©2020 Copyright: caixadois.com.br</b></span>
+                <a class="text-lighten-4 right" style="color: black;" href="privacidade" method="get"><b>Política de Privacidade</b></a>
+            </div>
         </footer>
 
 
