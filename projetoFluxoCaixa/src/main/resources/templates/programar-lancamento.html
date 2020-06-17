@@ -72,69 +72,66 @@
 
 	<!-- Início do Main -->
 
-	<main class="container">
+	<main class="container" style="width: 55%;">
 		<div class="wrapper">
 			<div class="col s12 m12"
-				style="box-shadow: #d3d3d3 2px 2px 1px; background: white; border-radius: 10px; padding: 20px 20px 0px 20px">
+				style="box-shadow: #d3d3d3 2px 2px 1px; background: white; border-radius: 10px; padding: 20px 20px 0px 20px; width: 75%;">
 				<form style="background: white; padding: 5px 20px 5px 20px;"
-					method="POST" action="salvarLan" th:object="${lancamento}">
+					method="POST" action="programarLan" th:object="${lancamento}">
 					<div class="row">
 						<div style="color: red;" th:text="${mensagem}"
 							th:if="${mensagem != null}"></div>
-						
-						<input 
-							id="idUsuario" type="text" class="validate"
+						<input id="idUsuario" type="text" class="validate"
 							style="display: none;" name="idUsuario"
-							th:value="${session.usuarioLogado.idUsuario}" />
-							
-						<input
-							id="idLancamento" type="text" class="validate"
-							style="display: none;" name="idLancamento"
-							th:value="${lancamento == null ? null : lancamento.idLancamento}" />
+							th:value="${session.usuarioLogado.idUsuario}">
 
 						<div class="row">
-							<div class="input-field col s5">
-
-								<select name="operacao" id="operacao" class="browser-default" required>
-                                    <option id="op0" value="" disabled >Operação</option>
-                                    <option id="op1" value="ENTRADA">Entrada</option>
-                                    <option id="op2" value="SAIDA">Saída</option>
-                                </select>
-
-
+							<div class="input-field col s4">
+								<select name="operacao" id="operacao" class="browser-default">
+									<option value="" disabled selected>Operação</option>
+									<option value="ENTRADA">Entrada</option>
+									<option value="SAIDA">Saída</option>
+								</select>
 							</div>
-							<div class="input-field col s7">
-								<input type="date" id="data" name="data" class="datepicker"
-									th:value="${dataFormatada == null ? null : dataFormatada}" required> 
-									<label>Data</label>
+							<div class="input-field col s4">
+								<input type="date" id="data" name="data" class="datepicker">
+								<label>Data</label>
 							</div>
+							<div class="input-field col s4"  style="margin: 0px;">
+								<label>Data Final<br/><input type="month" id=mesFinal name="mesFinal" class="datepicker" style="width: 70%; margin-top:  4px;"></label>
+							
+								
+							</div>
+							
 						</div>
 
 						<div class="row" style="margin-top: -50px;">
 							<div class="input-field col s12 ">
-								<input id="valor" name="valor" type="text" class="validate"
-									th:value="${lancamento == null ? null : lancamento.valor}" required> 
-									<label for="valor">Valor</label>
+								<input id="valor" name="valor" type="text" class="validate">
+								<label>Valor</label>
 							</div>
 						</div>
 						<div class="row" style="margin-top: -50px;">
 							<div class="input-field col s12">
-								<input id="descricao" name="descricao" type="text" 
-									class="materialize-textarea" th:value="${lancamento == null ? null : lancamento.descricao}" required>
-								<label for="descricao">Descrição</label>
+								<textarea id="descricao" name="descricao"
+									class="materialize-textarea"></textarea>
+								<label for="textarea1">Descrição</label>
 							</div>
 						</div>
 						<button type='submit' name='btn_login' id="programar"
-							class='waves-effect waves-light btn right'
-							style="margin-top: -40px; margin-bottom: -50px;">Lançar</button>
+							class='waves-effect waves-light btn right' style="margin-top: -40px; margin-bottom: -50px;">Lançar</button>
 					</div>
 				</form>
 			</div>
 		</div>
 
+
+
 	</main>
 
 	<!-- Fim do Main -->
+	
+	
 
 	<!--Início do Footer -->
 
@@ -153,7 +150,6 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script src="main.js"></script>
-	
 
 
 	<script>
@@ -186,43 +182,32 @@
 		}
 
 		window.addEventListener('load', init);
+		
 	</script>
 
 	<script>
-		//controle de proximos meses para programação de lançamentos
-		$("#data").mouseout(function(event) {
-			// captura data do primeiro lançamento
-			var dateControl = document.querySelector("#data").value;
+	//controle de proximos meses para programação de lançamentos
+	$("#data").mouseout(function(event){
+		// captura data do primeiro lançamento
+		var dateControl = document.querySelector("#data").value;
 
-			let dataString = dateControl.split("-");
-			var proximoMes = parseInt(dataString[1]) + 1;
+		let dataString = dateControl.split("-");
+		var proximoMes = parseInt(dataString[1])+1;
 
-			//Seta os proximos meses recorrentes como String
-			var d = (dataString[0] + "-" + "0" + proximoMes);
-			if (d.length == 8) {
-				var d = (dataString[0] + "-" + proximoMes);
+		//Seta os proximos meses recorrentes como String
+		var d = (dataString[0] +"-"+"0"+proximoMes);
+		if(d.length == 8){
+			var d = (dataString[0] +"-"+proximoMes);
 
-				//Em caso do primeiro mês ser 12
-				if (proximoMes == 13) {
-					var d = (parseInt(dataString[0]) + 1 + "-" + "01");
-				}
+			//Em caso do primeiro mês ser 12
+			if(proximoMes==13){
+				var d = (parseInt(dataString[0])+1 +"-"+"01");
 			}
-
-			//Seta os meses que podem ser escolhidos como proximos para lançamento futuros
-			document.getElementById('mesFinal').setAttribute('min', d);
-		});
-	</script>
-	
-	<script>
-		var op = document.querySelector("#op").value;
-		cosole.log(op);
-		if(op=="ENTRADA"){
-			$('#op1').attr('selected','selected');
-		}else if(op=="SAIDA"){
-			$('#op2').attr('selected','selected');
-		}else{
-			$('#op3').attr('selected','selected');
-		}
+		}	
+		
+		//Seta os meses que podem ser escolhidos como proximos para lançamento futuros
+		document.getElementById('mesFinal').setAttribute('min', d);		
+	});	
 	</script>
 </body>
 </html>

@@ -101,7 +101,7 @@
                 <div class="z-depth-1 table-div">
                     <table class="centered striped">
                         <thead>
-                        	<tr><td></td><td></td><td></td>
+                        	<tr><td></td><td></td>
                         		<td class="descricaoSaldo">Saldo Inicial do Mês:</td>
                         		<td id="saldoInicial" name="saldoInicial" th:text="${saldo}" class="valorSaldo"><i class="material-icons">attach_money</i></br></td>
                         	
@@ -110,7 +110,6 @@
                                 <th>Descrição</th>
                                 <th>Débito</th>
                                 <th>Crédito</th>
-                                <th>Saldo</th>		              
                             </tr>
                         </thead>
                         <tbody th:each="lan : ${lan}" >
@@ -123,13 +122,10 @@
                                 <td style="background-color: rgb(255, 74, 74);">                             
                                     <span id="valorNegativo" th:if="${lan.operacao == 'SAIDA'}"  th:text="${lan.valor}"></span>
                                 </td>
-                                <td  id="saldoCorrido" name="saldoCorrido" ></td>
-
-                                <!--th:text="${$('#saldoCorrido').text($'('saldoInicial').html())}"-->
-
+                                
                             </tr>
                         <tbody>	
-                            <tr><td></td><td></td><td></td>
+                            <tr><td></td><td></td>
                         		<td class="descricaoSaldo">Saldo Final do Mês:</td>
                         		<td id="saldoFinal" class="valorSaldo"><i class="material-icons">attach_money</i></br></td>                        	
                             <tr>	

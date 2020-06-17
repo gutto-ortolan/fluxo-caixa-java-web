@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import static java.lang.Integer.*;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +46,11 @@ public class LancamentoController {
 
 	@Autowired
 	LancamentoRepository lr;
+	
+	@RequestMapping("/programar-lancamento")
+	public String programarLancamento() {
+		return "programar-lancamento";
+	}	
 
 	@RequestMapping("/newLan")
 	public String newLan(HttpSession session, RedirectAttributes ra) {
@@ -58,11 +65,65 @@ public class LancamentoController {
 		}
 
 	}
+	@RequestMapping(value = "/programarLan", method = RequestMethod.POST)
+	public String programarLan(@RequestParam("valor") Double valor, @RequestParam("descricao") String descricao,
+			@RequestParam("data") String dataString, @RequestParam("operacao") String operacao, @RequestParam("mesFinal") String mesFinal,RedirectAttributes ra,
+			HttpSession session) throws ParseException {
+		
+		
+		Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+		String formato = "yyyy-MM-dd";
+		
+		int diaGeral = parseInt(dataString.substring(8, 10));
+		int mesInicio = parseInt(dataString.substring(5, 7));
+		int anoInicio = parseInt(dataString.substring(0, 4));
+		int mesFim = parseInt(mesFinal.substring(5, 7));
+		int anoFim = parseInt(mesFinal.substring(0, 4));
+
+		while(anoInicio<anoFim){			
+			while(mesInicio<=12) {				
+				String dtString = anoInicio + "-" + mesInicio + "-" + diaGeral;				
+				Date dtDate = new SimpleDateFormat(formato).parse(dtString);
+				
+				Lancamento lancamento = new Lancamento();
+				lancamento.setData(dtDate);
+				lancamento.setDescricao(descricao);
+				lancamento.setOperacao(operacao);
+				lancamento.setValor(valor);
+				lancamento.setUsuario(usuario);				
+				lr.save(lancamento);
+				
+				mesInicio=mesInicio+1;				
+			}
+			mesInicio=1;
+			anoInicio=anoInicio+1;		
+		}			
+		if(anoInicio==anoFim) {
+			while(mesInicio<=mesFim) {
+				String dtString = anoInicio + "-" + mesInicio + "-" + diaGeral;				
+				Date dtDate = new SimpleDateFormat(formato).parse(dtString);
+				
+				Lancamento lancamento = new Lancamento();
+				lancamento.setData(dtDate);
+				lancamento.setDescricao(descricao);
+				lancamento.setOperacao(operacao);
+				lancamento.setValor(valor);
+				lancamento.setUsuario(usuario);				
+				lr.save(lancamento);
+				
+				mesInicio=mesInicio+1;
+
+			}
+		}		
+		return "redirect:/menu";
+	}
 
 	@RequestMapping(value = "/salvarLan", method = RequestMethod.POST)
 	public String salvarLan(@RequestParam("valor") Double valor, @RequestParam("descricao") String descricao,
 			@RequestParam("data") String dataString, @RequestParam("operacao") String operacao, RedirectAttributes ra,
+
 			HttpSession session, @RequestParam("idLancamento") Integer idLancamento) throws ParseException {
+	
 
 		Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
 
@@ -76,6 +137,7 @@ public class LancamentoController {
 		lancamento.setDescricao(descricao);
 		lancamento.setOperacao(operacao);
 		lancamento.setValor(valor);
+
 		lancamento.setUsuario(usuario);
 		lancamento.setDataFormatada(sdf.format(dataDate));
 
@@ -84,6 +146,11 @@ public class LancamentoController {
 		}
 
 		lr.save(lancamento);
+
+		lancamento.setUsuario(usuario);		
+		lr.save(lancamento);		
+		
+
 		return "redirect:/menu";
 
 	}
@@ -322,7 +389,7 @@ public class LancamentoController {
 			table.addCell(header);
 		});
 	}
-
+	
 	private void addRows(PdfPTable table, Lancamento lancamento) {
 		table.addCell(lancamento.getDataFormatada());
 		table.addCell(lancamento.getDescricao());
