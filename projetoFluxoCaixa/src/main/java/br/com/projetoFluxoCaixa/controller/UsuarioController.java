@@ -89,7 +89,7 @@ public class UsuarioController {
 		
 		session.setAttribute("usuarioLogado", null);
 		
-		return "/index.html";
+		return "index.html";
 	}
 }
 	
