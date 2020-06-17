@@ -45,7 +45,7 @@
                                 <li><a href="programar-lancamento"><span class="menus">Programar</span></a></li>
                             </ul>
                         </li>
-                        <li><a href="#" class="menus">Extratos</a></li>
+                        <li><a href="extratos" class="menus">Extratos</a></li>
                         <li>
                             <a class="dropdown-trigger" data-target="dropdown-menu" href="#">
                                 <span class="menus" th:text="${session.usuarioLogado.nome}"></span>
@@ -115,7 +115,7 @@
                         </thead>
                         <tbody th:each="lan : ${lan}" >
                             <tr>
-                                <td th:text="${lan.data}"></td>
+                                <td th:text="${lan.dataFormatada}"></td>
                                 <td th:text="${lan.descricao}"></td>
                                 <td  style="background-color: rgb(128, 255, 134)">
                                     <span id="valorPositivo" th:if="${lan.operacao == 'ENTRADA'}"  th:text="${lan.valor}"></span>
