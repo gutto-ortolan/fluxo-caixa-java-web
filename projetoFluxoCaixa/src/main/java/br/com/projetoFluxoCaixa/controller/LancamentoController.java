@@ -1,10 +1,18 @@
 package br.com.projetoFluxoCaixa.controller;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,8 +23,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import br.com.projetoFluxoCaixa.model.Lancamento;
 import br.com.projetoFluxoCaixa.model.Usuario;
@@ -26,7 +41,7 @@ import br.com.projetoFluxoCaixa.repository.LancamentoRepository;
 public class LancamentoController {
 
 	private boolean controlador = false;
-	
+
 	@Autowired
 	LancamentoRepository lr;
 
@@ -47,12 +62,14 @@ public class LancamentoController {
 	@RequestMapping(value = "/salvarLan", method = RequestMethod.POST)
 	public String salvarLan(@RequestParam("valor") Double valor, @RequestParam("descricao") String descricao,
 			@RequestParam("data") String dataString, @RequestParam("operacao") String operacao, RedirectAttributes ra,
-			HttpSession session) throws ParseException {
+			HttpSession session, @RequestParam("idLancamento") Integer idLancamento) throws ParseException {
 
 		Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
 
 		String formato = "yyyy-MM-dd";
 		Date dataDate = new SimpleDateFormat(formato).parse(dataString);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		Lancamento lancamento = new Lancamento();
 		lancamento.setData(dataDate);
@@ -60,30 +77,16 @@ public class LancamentoController {
 		lancamento.setOperacao(operacao);
 		lancamento.setValor(valor);
 		lancamento.setUsuario(usuario);
+		lancamento.setDataFormatada(sdf.format(dataDate));
+
+		if (idLancamento != null) {
+			lancamento.setIdLancamento(idLancamento);
+		}
 
 		lr.save(lancamento);
 		return "redirect:/menu";
 
 	}
-	/*
-	 * Falha ao coletar dados do menu.html - metodo chamado para filtrar por mes e
-	 * ano escolhido
-	 * 
-	 * @RequestMapping(value = "/filtrarLanPorMes", method = RequestMethod.POST)
-	 * public String filtrarLanPorMes(@RequestParam("saldoFinal") String saldoFinal,
-	 * 
-	 * @RequestParam("saldoInicial") String saldoInicial,
-	 * 
-	 * @RequestParam("mes") String mes,
-	 * 
-	 * @RequestParam("ano") String ano, RedirectAttributes ra, HttpSession session)
-	 * {
-	 * 
-	 * System.out.println("teste filtro"); return "newLan";
-	 * 
-	 * 
-	 * }
-	 */
 
 	@RequestMapping("/manutencao-lancamento")
 	public String manutencaoLancamento(HttpSession session, RedirectAttributes ra) {
@@ -154,6 +157,8 @@ public class LancamentoController {
 
 		Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
 
+		System.out.println(dtInicial);
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		List<Lancamento> listLancamentos = new ArrayList();
@@ -182,4 +187,147 @@ public class LancamentoController {
 		return "redirect:/manutencao-lancamento";
 
 	}
+
+	@RequestMapping("/editarLancamento/{idlan}")
+	private String editarLancamento(HttpSession session, RedirectAttributes ra, @PathVariable("idlan") Integer idlan)
+			throws ParseException {
+
+		Optional<Lancamento> lancamento = lr.findById(idlan);
+
+		System.out.println(lancamento.get().getData());
+		System.out.println(lancamento.get().getDescricao());
+		System.out.println(lancamento.get().getValor());
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		System.out.println(sdf.format(lancamento.get().getData()));
+
+		ra.addFlashAttribute("lancamento", lancamento.get());
+		ra.addFlashAttribute("operacao", lancamento.get().getOperacao());
+		ra.addFlashAttribute("dataFormatada", sdf.format(lancamento.get().getData()));
+
+		return "redirect:/newLan";
+	}
+
+	@RequestMapping("/extratos")
+	private String extratos(HttpSession session, RedirectAttributes ra) {
+
+		Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+
+		if (usuario == null) {
+			ra.addFlashAttribute("mensagem", "É necessário logar para essa ação.");
+			return "redirect:/login";
+		} else {
+
+			List<Lancamento> lancamentosFiltrados = (List<Lancamento>) session.getAttribute("lancamentosFiltrados");
+
+			if (session.getAttribute("controlador") != null) {
+				if (session.getAttribute("controlador").equals(true)) {
+					controlador = true;
+				}
+			}
+
+			if (controlador) {
+				session.setAttribute("lancamentos", lancamentosFiltrados);
+				session.setAttribute("controlador", false);
+			} else {
+				session.setAttribute("lancamentos", null);
+			}
+
+			return "extratos";
+		}
+	}
+
+	@RequestMapping("/filtrarLancamentosImpressao")
+	public String filtrarLancamentosImpressao(HttpSession session, @RequestParam("inicial") String dtInicial,
+			@RequestParam("final") String dtFinal, @RequestParam("operacao") String operacao, RedirectAttributes ra)
+			throws ParseException {
+
+		Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		List<Lancamento> listLancamentos = new ArrayList();
+		if (!operacao.equals("AMBOS")) {
+			listLancamentos = lr.findLancamentosPorPeriodoComOperacao(sdf.parse(dtInicial), sdf.parse(dtFinal),
+					usuario.getIdUsuario(), operacao);
+			session.setAttribute("lancamentosFiltrados", listLancamentos);
+			session.setAttribute("controlador", true);
+			session.setAttribute("inicial", dtInicial);
+			session.setAttribute("final", dtFinal);
+			session.setAttribute("operacao", operacao);
+		} else {
+			listLancamentos = lr.findLancamentosPorPeriodoSemOperacao(sdf.parse(dtInicial), sdf.parse(dtFinal),
+					usuario.getIdUsuario());
+			session.setAttribute("lancamentosFiltrados", listLancamentos);
+			session.setAttribute("controlador", true);
+			session.setAttribute("inicial", dtInicial);
+			session.setAttribute("final", dtFinal);
+			session.setAttribute("operacao", operacao);
+		}
+
+		ra.addFlashAttribute("inicial", dtInicial);
+		ra.addFlashAttribute("final", dtFinal);
+		ra.addFlashAttribute("operacao", operacao);
+
+		return "redirect:/extratos";
+
+	}
+
+	@RequestMapping("/imprimirExtratos")
+	private String imprimir(HttpSession session, RedirectAttributes ra) throws DocumentException, IOException {
+
+		List<Lancamento> lancamentosFiltrados = (List<Lancamento>) session.getAttribute("lancamentosFiltrados");
+
+		String nomeFile = "H:\\Meus Documentos\\Área de Trabalho\\Programação\\teste.pdf";
+
+		Document document = new Document();
+		PdfWriter.getInstance(document, new FileOutputStream(nomeFile));
+
+		document.open();
+
+		Paragraph para = new Paragraph("Extrato dos Lançamentos");
+		Paragraph para1 = new Paragraph("");
+
+		PdfPTable table = new PdfPTable(4);
+		addTableHeader(table);
+
+		for (Lancamento lancamento : lancamentosFiltrados) {
+			addRows(table, lancamento);
+		}
+
+		document.add(para);
+		document.add(para1);
+		document.add(table);
+		document.close();
+
+		String dtInicial = session.getAttribute("inicial") == null ? null : session.getAttribute("inicial").toString();
+		String dtFinal = session.getAttribute("final") == null ? null : session.getAttribute("final").toString();
+		String operacao = session.getAttribute("operacao") == null ? null : session.getAttribute("operacao").toString();
+
+		ra.addFlashAttribute("inicial", dtInicial);
+		ra.addFlashAttribute("final", dtFinal);
+		ra.addFlashAttribute("operacao", operacao);
+
+		return "redirect:/extratos";
+	}
+
+	private void addTableHeader(PdfPTable table) {
+		Stream.of("Data", "Descrição", "Valor", "Operação").forEach(columnTitle -> {
+			PdfPCell header = new PdfPCell();
+			header.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			header.setBorderWidth(1);
+			header.setPhrase(new Phrase(columnTitle));
+			header.setHorizontalAlignment(1);
+			table.addCell(header);
+		});
+	}
+
+	private void addRows(PdfPTable table, Lancamento lancamento) {
+		table.addCell(lancamento.getDataFormatada());
+		table.addCell(lancamento.getDescricao());
+		table.addCell(lancamento.getValor().toString());
+		table.addCell(lancamento.getOperacao());
+	}
+
 }
