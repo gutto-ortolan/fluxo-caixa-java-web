@@ -53,7 +53,7 @@ video {
                 min-height: 100%;
                 background-color: #F6F6F6;
             }
-            .descricaoSaldo{
+     			.descricaoSaldo{
 				border-style: groove;
 				border-width: 2px 0px 2px 2px;
             	border-color: green;
@@ -63,7 +63,6 @@ video {
   	        	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
             	font-size: 16px;
             	font-weight: bond;
-            	line-height: 1.4;
             	
             	
             }
@@ -77,8 +76,10 @@ video {
             	color: red;
             	line-height: 1.2;
             	font-size: 20px;
+            	width: 170px;
             	
-            }            
+            	
+            }                       
             .page-footer{
                 margin-top: auto;
             }
