@@ -275,7 +275,13 @@ public class LancamentoController {
 	}
 
 	@RequestMapping("/imprimirExtratos")
-	private String imprimir(HttpSession session, RedirectAttributes ra) throws DocumentException, IOException {
+	private String imprimir(HttpSession session, RedirectAttributes ra) throws DocumentException, IOException, ParseException {
+		
+		String dtInicial = session.getAttribute("inicial") == null ? null : session.getAttribute("inicial").toString();
+		String dtFinal = session.getAttribute("final") == null ? null : session.getAttribute("final").toString();
+		String operacao = session.getAttribute("operacao") == null ? null : session.getAttribute("operacao").toString();
+		
+		Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
 
 		List<Lancamento> lancamentosFiltrados = (List<Lancamento>) session.getAttribute("lancamentosFiltrados");
 
@@ -287,23 +293,34 @@ public class LancamentoController {
 		document.open();
 
 		Paragraph para = new Paragraph("Extrato dos Lançamentos");
-		Paragraph para1 = new Paragraph("");
+		para.setAlignment(1);
+		
 
 		PdfPTable table = new PdfPTable(4);
+		table.setPaddingTop(10);
 		addTableHeader(table);
 
 		for (Lancamento lancamento : lancamentosFiltrados) {
 			addRows(table, lancamento);
 		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Double saldoInicial = lr.findSaldoInicial(usuario.getIdUsuario(), sdf.parse(dtInicial));
+		Double saldoFinal = lr.findSaldoFinal(usuario.getIdUsuario(), sdf.parse(dtInicial), sdf.parse(dtFinal));
+		
+		
+		Paragraph saldoInicialPara = new Paragraph("Saldo Inicial: "+saldoInicial);
+		Paragraph saldoFinalPara = new Paragraph("Saldo Final: "+saldoFinal);
+		
+		
+		
 
 		document.add(para);
-		document.add(para1);
 		document.add(table);
+		document.add(saldoInicialPara);
+		document.add(saldoFinalPara);
 		document.close();
-
-		String dtInicial = session.getAttribute("inicial") == null ? null : session.getAttribute("inicial").toString();
-		String dtFinal = session.getAttribute("final") == null ? null : session.getAttribute("final").toString();
-		String operacao = session.getAttribute("operacao") == null ? null : session.getAttribute("operacao").toString();
 
 		ra.addFlashAttribute("inicial", dtInicial);
 		ra.addFlashAttribute("final", dtFinal);
