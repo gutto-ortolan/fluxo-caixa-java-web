@@ -211,5 +211,17 @@
 			document.getElementById('mesFinal').setAttribute('min', d);
 		});
 	</script>
+	
+	<script>
+		var op = document.querySelector("#op0").value;
+		cosole.log(op);
+		if(op=="ENTRADA"){
+			$('#op1').attr('selected','selected');
+		}else if(op=="SAIDA"){
+			$('#op2').attr('selected','selected');
+		}else{
+			$('#op0').attr('selected','selected');
+		}
+	</script>
 </body>
 </html>

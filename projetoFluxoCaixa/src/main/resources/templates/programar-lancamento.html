@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<title>Fluxo Caixa</title>
+
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<!--Import materialize.css-->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<link type="text/css" rel="stylesheet" href="styles.css" />
+
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+<body style="background-color: #F6F6F6;">
+
+	<!-- Início do Header -->
+
+	<header class="cabecalho">
+
+		<!-- Logo -->
+		<!-- Botão Entrar -->
+		<!-- Botão Cadastrar -->
+
+		<nav>
+			<div class="nav-wrapper" style="background-color: #FFFF;">
+				<a href="menu" class="brand-logo"> <img src="imagens/logo.png"
+					class="responsive-img" style="width: 60px; margin-left: 10px">
+				</a>
+				<ul id="navbar-items" class="right hide-on-med-and-down"
+					style="margin-right: 10px;">
+					<li><a class="dropdown-trigger" data-target="dropdown-lanc"
+						href="#"> <span class="menus">Lançamentos</span> <i
+							class="material-icons right menus" style="margin-left: 1px;">arrow_drop_down</i>
+					</a> <!-- Dropdown -->
+						<ul id="dropdown-lanc" class="dropdown-content">
+							<li><a href="newLan"><span class="menus">Novo</span></a></li>
+							<li><a href="manutencao-lancamento"><span class="menus">Editar/Excluir</span></a></li>
+							<li><a href="programarLancamento"><span class="menus">Programar</span></a></li>
+						</ul></li>
+					<li><a href="#" class="menus">Extratos</a></li>
+					<li><a class="dropdown-trigger" data-target="dropdown-menu"
+						href="#"> <span class="menus"
+							th:text="${session.usuarioLogado.nome}"></span> <i
+							class="material-icons left menus" style="margin-right: 4px;">account_circle</i>
+							<i class="material-icons right menus" style="margin-left: 1px;">arrow_drop_down</i>
+					</a> <!-- Dropdown -->
+						<ul id="dropdown-menu" class="dropdown-content">
+							<li><a href="perfil"><span class="menus">Perfil</span><i
+									class="material-icons left menus" style="margin-right: 4px;">account_box</i></a></li>
+							<li><a href="configuracao"><span class="menus">Config.</span><i
+									class="material-icons left menus" style="margin-right: 4px;">build</i></a></li>
+							<li class="divider"></li>
+							<li><a href="logout"><span class="menus">Sair</span><i
+									class="material-icons left menus" style="margin-right: 4px;">exit_to_app</i></a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<div class="cabecalho-espaco">
+		</br>
+	</div>
+
+	<!--Fim do Header -->
+
+	<!-- Início do Main -->
+
+	<main class="container" style="width: 55%;">
+		<div class="wrapper">
+			<div class="col s12 m12"
+				style="box-shadow: #d3d3d3 2px 2px 1px; background: white; border-radius: 10px; padding: 20px 20px 0px 20px; width: 75%;">
+				<form style="background: white; padding: 5px 20px 5px 20px;"
+					method="POST" action="programarLan" th:object="${lancamento}">
+					<div class="row">
+						<div style="color: red;" th:text="${mensagem}"
+							th:if="${mensagem != null}"></div>
+						<input id="idUsuario" type="text" class="validate"
+							style="display: none;" name="idUsuario"
+							th:value="${session.usuarioLogado.idUsuario}">
+
+						<div class="row">
+							<div class="input-field col s4">
+								<select name="operacao" id="operacao" class="browser-default">
+									<option value="" disabled selected>Operação</option>
+									<option value="ENTRADA">Entrada</option>
+									<option value="SAIDA">Saída</option>
+								</select>
+							</div>
+							<div class="input-field col s4">
+								<input type="date" id="data" name="data" class="datepicker">
+								<label>Data</label>
+							</div>
+							<div class="input-field col s4"  style="margin: 0px;">
+								<label>Data Final<br/><input type="month" id=mesFinal name="mesFinal" class="datepicker" style="width: 70%; margin-top:  4px;"></label>
+							
+								
+							</div>
+							
+						</div>
+
+						<div class="row" style="margin-top: -50px;">
+							<div class="input-field col s12 ">
+								<input id="valor" name="valor" type="text" class="validate">
+								<label>Valor</label>
+							</div>
+						</div>
+						<div class="row" style="margin-top: -50px;">
+							<div class="input-field col s12">
+								<textarea id="descricao" name="descricao"
+									class="materialize-textarea"></textarea>
+								<label for="textarea1">Descrição</label>
+							</div>
+						</div>
+						<button type='submit' name='btn_login' id="programar"
+							class='waves-effect waves-light btn right' style="margin-top: -40px; margin-bottom: -50px;">Lançar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+
+	</main>
+
+	<!-- Fim do Main -->
+	
+	
+
+	<!--Início do Footer -->
+
+	<footer class="page-footer">
+		<div class="container">
+			<span style="color: black;"><b>©2020 Copyright:
+					siscaixa.com.br</b></span> <a class="text-lighten-4 right"
+				style="color: black;" href="privacidade" method="get"><b>Política
+					de Privacidade</b></a>
+		</div>
+	</footer>
+
+	<!-- Fim do Footer -->
+
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="main.js"></script>
+
+
+	<script>
+		function init() {
+			var cabecalho = document.querySelector('.cabecalho');
+			var cabecalhoEspaco = document.querySelector('.cabecalho-espaco');
+			var cabecalhoOffset = cabecalho.offsetTop;
+
+			function verificaCabecalho() {
+				var scrollTop = window.scrollY;
+				var cabecalhoAltura = cabecalho.offsetHeight;
+
+				if (scrollTop >= cabecalhoOffset) {
+					// rolagem da página passou do elemento, vamos fixá-lo
+					cabecalho.classList.add('cabecalho--fixo');
+
+					// ativa cabecalho-espaco para ocupar o espaço perdido
+					cabecalhoEspaco.style.height = cabecalhoAltura + 'px';
+				} else {
+					// retira a classe adicional do elemento
+					cabecalho.classList.remove('cabecalho--fixo');
+
+					// retira a altura do cabecalho-espaco
+					cabecalhoEspaco.style.height = 0;
+				}
+			}
+
+			window.addEventListener('scroll', verificaCabecalho);
+			window.addEventListener('resize', verificaCabecalho);
+		}
+
+		window.addEventListener('load', init);
+		
+	</script>
+
+	<script>
+	//controle de proximos meses para programação de lançamentos
+	$("#data").mouseout(function(event){
+		// captura data do primeiro lançamento
+		var dateControl = document.querySelector("#data").value;
+
+		let dataString = dateControl.split("-");
+		var proximoMes = parseInt(dataString[1])+1;
+
+		//Seta os proximos meses recorrentes como String
+		var d = (dataString[0] +"-"+"0"+proximoMes);
+		if(d.length == 8){
+			var d = (dataString[0] +"-"+proximoMes);
+
+			//Em caso do primeiro mês ser 12
+			if(proximoMes==13){
+				var d = (parseInt(dataString[0])+1 +"-"+"01");
+			}
+		}	
+		
+		//Seta os meses que podem ser escolhidos como proximos para lançamento futuros
+		document.getElementById('mesFinal').setAttribute('min', d);		
+	});	
+	</script>
+</body>
+</html>
