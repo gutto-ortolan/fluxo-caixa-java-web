@@ -49,7 +49,7 @@ public class LancamentoController {
 
 	@Autowired
 	LancamentoRepository lr;
-	
+
 	@RequestMapping("/programarLancamento")
 	public String programarLancamento() {
 		return "programar-lancamento";
@@ -68,58 +68,58 @@ public class LancamentoController {
 		}
 
 	}
+
 	@RequestMapping(value = "/programarLan", method = RequestMethod.POST)
 	public String programarLan(@RequestParam("valor") Double valor, @RequestParam("descricao") String descricao,
-			@RequestParam("data") String dataString, @RequestParam("operacao") String operacao, @RequestParam("mesFinal") String mesFinal,RedirectAttributes ra,
-			HttpSession session) throws ParseException {
-		
-		
+			@RequestParam("data") String dataString, @RequestParam("operacao") String operacao,
+			@RequestParam("mesFinal") String mesFinal, RedirectAttributes ra, HttpSession session)
+			throws ParseException {
+
 		Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
 		String formato = "yyyy-MM-dd";
-		
+
 		int diaGeral = parseInt(dataString.substring(8, 10));
 		int mesInicio = parseInt(dataString.substring(5, 7));
 		int anoInicio = parseInt(dataString.substring(0, 4));
 		int mesFim = parseInt(mesFinal.substring(5, 7));
 		int anoFim = parseInt(mesFinal.substring(0, 4));
 
-		while(anoInicio<anoFim){			
-			while(mesInicio<=12) {				
-				String dtString = anoInicio + "-" + mesInicio + "-" + diaGeral;				
+		while (anoInicio < anoFim) {
+			while (mesInicio <= 12) {
+				String dtString = anoInicio + "-" + mesInicio + "-" + diaGeral;
 				Date dtDate = new SimpleDateFormat(formato).parse(dtString);
-				
+
 				Lancamento lancamento = new Lancamento();
 				lancamento.setData(dtDate);
 				lancamento.setDescricao(descricao);
 				lancamento.setOperacao(operacao);
 				lancamento.setValor(valor);
-				lancamento.setUsuario(usuario);				
+				lancamento.setUsuario(usuario);
 				lr.save(lancamento);
-				
-				mesInicio=mesInicio+1;				
+
+				mesInicio = mesInicio + 1;
 			}
-			mesInicio=1;
-			anoInicio=anoInicio+1;		
-		}			
-		if(anoInicio==anoFim) {
-			while(mesInicio<=mesFim) {
-				String dtString = anoInicio + "-" + mesInicio + "-" + diaGeral;				
+			mesInicio = 1;
+			anoInicio = anoInicio + 1;
+		}
+		if (anoInicio == anoFim) {
+			while (mesInicio <= mesFim) {
+				String dtString = anoInicio + "-" + mesInicio + "-" + diaGeral;
 				Date dtDate = new SimpleDateFormat(formato).parse(dtString);
-				
+
 				Lancamento lancamento = new Lancamento();
 				lancamento.setData(dtDate);
 				lancamento.setDescricao(descricao);
 				lancamento.setOperacao(operacao);
 				lancamento.setValor(valor);
-				lancamento.setUsuario(usuario);				
+				lancamento.setUsuario(usuario);
 				lr.save(lancamento);
-				
-				mesInicio=mesInicio+1;
+
+				mesInicio = mesInicio + 1;
 			}
-		}		
+		}
 		return "redirect:/menu";
 	}
-
 
 	@RequestMapping(value = "/salvarLan", method = RequestMethod.POST)
 	public String salvarLan(@RequestParam("valor") Double valor, @RequestParam("descricao") String descricao,
@@ -335,100 +335,156 @@ public class LancamentoController {
 		return "redirect:/extratos";
 
 	}
-	
+
 	@RequestMapping("/menuPrincipal")
-	public String menuPrincipal(HttpSession session, RedirectAttributes ra) {	
-		
-		Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
-		
-		if(usuario == null) {
+	public String menuPrincipal(HttpSession session, RedirectAttributes ra) {
+
+		Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+
+		if (usuario == null) {
 			ra.addFlashAttribute("mensagem", "É necessário logar para essa ação.");
-   		 	return "redirect:/login";
-		}else {
+			return "redirect:/login";
+		} else {
 			return "menu";
 		}
-		
-		
-	}	
-	
-	@RequestMapping(value="/menu", method=RequestMethod.GET)
-	public String menu(HttpSession session, RedirectAttributes ra) throws ParseException {	
-		
-        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");	
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        
-        if(usuario == null) {
-        	ra.addFlashAttribute("mensagem", "É necessário logar para essa ação.");
-   		 	return "redirect:/login";
-        }else {
-        	
-        	if (session.getAttribute("controladorDatas") != null) {
+
+	}
+
+	@RequestMapping(value = "/menu", method = RequestMethod.GET)
+	public String menu(HttpSession session, RedirectAttributes ra) throws ParseException {
+
+		Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		if (usuario == null) {
+			ra.addFlashAttribute("mensagem", "É necessário logar para essa ação.");
+			return "redirect:/login";
+		} else {
+
+			if (session.getAttribute("controladorDatas") != null) {
 				if (session.getAttribute("controladorDatas").equals(true)) {
 					controladorDatas = true;
 				}
 			}
-        	
-        	if (controladorDatas) {
-        		
-        		String di = sdf.format(session.getAttribute("periodoInicial"));
-        		String df = sdf.format(session.getAttribute("periodoFinal"));
-        		
-        		
-        		Date periodoInicial = sdf.parse(di);
-            	Date periodoFinal = sdf.parse(df);
-            	
-            	List<Lancamento> lancamentos = lr.findLancamentosPorMes(periodoInicial, periodoFinal, usuario.getIdUsuario());
-        		ra.addFlashAttribute("lan", lancamentos);
-        		session.setAttribute("controladorDatas", false);
-        		return "redirect:/menuPrincipal";
-        	}else {
-        		Date periodoInicial = new ParseDate().getLimiteInicial(new Date(), Calendar.MONTH);
-            	Date periodoFinal = new ParseDate().getLimiteFinal(new Date(), Calendar.MONTH);
-            	
-            	List<Lancamento> lancamentos = lr.findLancamentosPorMes(periodoInicial, periodoFinal, usuario.getIdUsuario());
-        		ra.addFlashAttribute("lan", lancamentos);
-        		return "redirect:/menuPrincipal";
-        	}
-        	
-        }
-        
+
+			if (controladorDatas) {
+
+				String di = sdf.format(session.getAttribute("periodoInicial"));
+				String df = sdf.format(session.getAttribute("periodoFinal"));
+
+				String mesFiltro = di.substring(5, 7);
+				String mesFiltroNome = "";
+				String anoFiltro = di.substring(0, 4);
+
+				switch (mesFiltro) {
+				case "01":
+					mesFiltroNome = "Janeiro";
+					break;
+				case "02":
+					mesFiltroNome = "Fevereiro";
+					break;
+				case "03":
+					mesFiltroNome = "Março";
+					break;
+				case "04":
+					mesFiltroNome = "Abril";
+					break;
+				case "05":
+					mesFiltroNome = "Maio";
+					break;
+				case "06":
+					mesFiltroNome = "Junho";
+					break;
+				case "07":
+					mesFiltroNome = "Julho";
+					break;
+				case "08":
+					mesFiltroNome = "Agosto";
+					break;
+				case "09":
+					mesFiltroNome = "Setembro";
+					break;
+				case "10":
+					mesFiltroNome = "Outubro";
+					break;
+				case "11":
+					mesFiltroNome = "Novembro";
+					break;
+				case "12":
+					mesFiltroNome = "Dezembro";
+					break;
+				default:
+					break;
+				}
+
+				Date periodoInicial = sdf.parse(di);
+				Date periodoFinal = sdf.parse(df);
+
+				List<Lancamento> lancamentos = lr.findLancamentosPorMes(periodoInicial, periodoFinal,
+						usuario.getIdUsuario());
+				Double saldoFinal = lr.findSaldoFinal(usuario.getIdUsuario(), periodoInicial, periodoFinal);
+			    Double saldoInicial = lr.findSaldoInicial(usuario.getIdUsuario(), periodoInicial);
+				session.setAttribute("lancamentosMenu", lancamentos);
+				session.setAttribute("controladorDatas", false);
+				session.setAttribute("filtroMes", "Lançamentos do mês de " + mesFiltroNome + " de "+anoFiltro);
+				session.setAttribute("saldoInicialMenu", "Saldo Inicial do Mês: R$"+(saldoInicial == null ? 0 : saldoInicial));
+				session.setAttribute("saldoFinalMenu", "Saldo Final do Mês: R$"+(saldoFinal == null ? 0 : saldoFinal));
+				return "redirect:/menuPrincipal";
+			} else {
+				Date periodoInicial = new ParseDate().getLimiteInicial(new Date(), Calendar.MONTH);
+				Date periodoFinal = new ParseDate().getLimiteFinal(new Date(), Calendar.MONTH);
+
+				List<Lancamento> lancamentos = lr.findLancamentosPorMes(periodoInicial, periodoFinal,
+						usuario.getIdUsuario());
+				
+				Double saldoFinal = lr.findSaldoFinal(usuario.getIdUsuario(), periodoInicial, periodoFinal);
+			    Double saldoInicial = lr.findSaldoInicial(usuario.getIdUsuario(), periodoInicial);
+				session.setAttribute("lancamentosMenu", lancamentos);
+				session.setAttribute("filtroMes", "Lançamentos do mês corrente");
+				session.setAttribute("saldoInicialMenu", "Saldo Inicial do Mês: R$"+(saldoInicial == null ? 0 : saldoInicial));
+				session.setAttribute("saldoFinalMenu", "Saldo Final do Mês: R$"+(saldoFinal == null ? 0 : saldoFinal));
+				return "redirect:/menuPrincipal";
+			}
+
+		}
+
 	}
-	
+
 	@RequestMapping("/filtrarLanPorMes")
-	private String filtrarLanPorMes(HttpSession session, RedirectAttributes ra, @RequestParam("mes") String mes, @RequestParam("ano") String ano) {
-		
-		
+	private String filtrarLanPorMes(HttpSession session, RedirectAttributes ra, @RequestParam("mes") String mes,
+			@RequestParam("ano") String ano) {
+
 		Integer mesSolicitado = new Integer(mes);
 		Integer anoSelecionado = new Integer(ano);
-		
+
 		ParseDate pd = new ParseDate();
-		
+
 		Calendar cal = new GregorianCalendar(anoSelecionado, mesSolicitado, 1);
-		
+
 		Date periodoInicial = pd.getLimiteInicial(cal.getTime(), Calendar.MONTH);
-    	Date periodoFinal = pd.getLimiteFinal(cal.getTime(), Calendar.MONTH);
-    	
-    	session.setAttribute("periodoInicial", periodoInicial);
+		Date periodoFinal = pd.getLimiteFinal(cal.getTime(), Calendar.MONTH);
+
+		session.setAttribute("periodoInicial", periodoInicial);
 		session.setAttribute("periodoFinal", periodoFinal);
 		session.setAttribute("controladorDatas", true);
-		
+
 		return "redirect:/menu";
 	}
-	
 
 	@RequestMapping("/imprimirExtratos")
-	private String imprimir(HttpSession session, RedirectAttributes ra) throws DocumentException, IOException, ParseException {
-		
+	private String imprimir(HttpSession session, RedirectAttributes ra)
+			throws DocumentException, IOException, ParseException {
+
 		String dtInicial = session.getAttribute("inicial") == null ? null : session.getAttribute("inicial").toString();
 		String dtFinal = session.getAttribute("final") == null ? null : session.getAttribute("final").toString();
 		String operacao = session.getAttribute("operacao") == null ? null : session.getAttribute("operacao").toString();
-		
+
 		Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
 
 		List<Lancamento> lancamentosFiltrados = (List<Lancamento>) session.getAttribute("lancamentosFiltrados");
 
-		String nomeFile = "H:\\Meus Documentos\\Área de Trabalho\\Programação\\teste.pdf";
+		String nomeFile = "H:\\Meus Documentos\\Área de Trabalho\\Programação\\ExtratoLancamentos.pdf";
 
 		Document document = new Document();
 		PdfWriter.getInstance(document, new FileOutputStream(nomeFile));
@@ -438,6 +494,7 @@ public class LancamentoController {
 		Paragraph para = new Paragraph("Extrato dos Lançamentos");
 		para.setAlignment(1);
 		
+		Paragraph para1 = new Paragraph(".");
 
 		PdfPTable table = new PdfPTable(4);
 		table.setPaddingTop(10);
@@ -446,20 +503,17 @@ public class LancamentoController {
 		for (Lancamento lancamento : lancamentosFiltrados) {
 			addRows(table, lancamento);
 		}
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		Double saldoInicial = lr.findSaldoInicial(usuario.getIdUsuario(), sdf.parse(dtInicial));
 		Double saldoFinal = lr.findSaldoFinal(usuario.getIdUsuario(), sdf.parse(dtInicial), sdf.parse(dtFinal));
-		
-		
-		Paragraph saldoInicialPara = new Paragraph("Saldo Inicial: "+saldoInicial);
-		Paragraph saldoFinalPara = new Paragraph("Saldo Final: "+saldoFinal);
-		
-		
-		
+
+		Paragraph saldoInicialPara = new Paragraph("Saldo Inicial: " + saldoInicial);
+		Paragraph saldoFinalPara = new Paragraph("Saldo Final: " + saldoFinal);
 
 		document.add(para);
+		document.add(para1);
 		document.add(table);
 		document.add(saldoInicialPara);
 		document.add(saldoFinalPara);
@@ -468,7 +522,7 @@ public class LancamentoController {
 		ra.addFlashAttribute("inicial", dtInicial);
 		ra.addFlashAttribute("final", dtFinal);
 		ra.addFlashAttribute("operacao", operacao);
-		
+
 		return "redirect:/extratos";
 	}
 

@@ -97,22 +97,22 @@
 				</form>
             </div>
             <div class="col m9 ">
+            
+            	<div style="margin-left: 40px;"><h5 th:text="${session.filtroMes}"></h4></div>
             	
                 <div class="z-depth-1 table-div">
                     <table class="centered striped">
                         <thead>
-                        	<tr><td></td><td></td>
-                        		<td class="descricaoSaldo">Saldo Inicial do Mês:</td>
-                        		<td id="saldoInicial" name="saldoInicial" th:text="${saldo}" class="valorSaldo"><i class="material-icons">attach_money</i></br></td>
                         	
+      
                             <tr>
                                 <th>Data</th>
                                 <th>Descrição</th>
-                                <th>Débito</th>
-                                <th>Crédito</th>
+                                <th>Entrada</th>
+                                <th>Saída</th>
                             </tr>
                         </thead>
-                        <tbody th:each="lan : ${lan}" >
+                        <tbody th:each="lan : ${session.lancamentosMenu}" >
                             <tr>
                                 <td th:text="${lan.dataFormatada}"></td>
                                 <td th:text="${lan.descricao}"></td>
@@ -124,13 +124,12 @@
                                 </td>
                                 
                             </tr>
-                        <tbody>	
-                            <tr><td></td><td></td>
-                        		<td class="descricaoSaldo">Saldo Final do Mês:</td>
-                        		<td id="saldoFinal" class="valorSaldo"><i class="material-icons">attach_money</i></br></td>                        	
-                            <tr>	
+                        <tbody>		
                     </table>	
                   </div>
+                  
+                  <div style="margin-left: 40px;"><h5 th:text="${session.saldoInicialMenu}"></h4></div>
+                  <div style="margin-left: 40px;"><h5 th:text="${session.saldoFinalMenu}"></h4></div>
                 </div>
 		               
         </main>
