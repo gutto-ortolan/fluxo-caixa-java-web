@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<title>Fluxo Caixa</title>
+
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<!--Import materialize.css-->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<link type="text/css" rel="stylesheet" href="styles.css" />
+
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+
+	<!-- Início do Header -->
+
+	<header class="cabecalho">
+
+		<!-- Logo -->
+		<!-- Botão Entrar -->
+		<!-- Botão Cadastrar -->
+
+		<nav>
+			<div class="nav-wrapper" style="background-color: #FFFF;">
+				<a href="menu" class="brand-logo"> <img src="imagens/logo.png"
+					class="responsive-img" style="width: 60px; margin-left: 10px">
+				</a>
+				<ul id="navbar-items" class="right hide-on-med-and-down"
+					style="margin-right: 10px;">
+					<li><a class="dropdown-trigger" data-target="dropdown-lanc"
+						href="#"> <span class="menus">Lançamentos</span> <i
+							class="material-icons right menus" style="margin-left: 1px;">arrow_drop_down</i>
+					</a> <!-- Dropdown -->
+						<ul id="dropdown-lanc" class="dropdown-content">
+							<li><a href="newLan"><span class="menus">Novo</span></a></li>
+							<li><a href="manutencao-lancamento"><span class="menus">Editar/Excluir</span></a></li>
+							<li><a href="programar-lancamento"><span class="menus">Programar</span></a></li>
+						</ul></li>
+					<li><a href="#" class="menus">Extratos</a></li>
+					<li><a class="dropdown-trigger" data-target="dropdown-menu"
+						href="#"> <span class="menus"
+							th:text="${session.usuarioLogado.nome}"></span> <i
+							class="material-icons left menus" style="margin-right: 4px;">account_circle</i>
+							<i class="material-icons right menus" style="margin-left: 1px;">arrow_drop_down</i>
+					</a> <!-- Dropdown -->
+						<ul id="dropdown-menu" class="dropdown-content">
+							<li><a href="perfil"><span class="menus">Perfil</span><i
+									class="material-icons left menus" style="margin-right: 4px;">account_box</i></a></li>
+							<li><a href="configuracao"><span class="menus">Config.</span><i
+									class="material-icons left menus" style="margin-right: 4px;">build</i></a></li>
+							<li class="divider"></li>
+							<li><a href="logout"><span class="menus">Sair</span><i
+									class="material-icons left menus" style="margin-right: 4px;">exit_to_app</i></a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</nav>
+
+	</header>
+	<div class="cabecalho-espaco">
+		<br />
+	</div>
+
+
+	<main class="container">
+
+		<div class="row">
+
+			<form method="POST" action="filtrarLancamentos">
+				<div class="input-field col s3">
+					<input type="date" id="inicial" name="inicial" class="datepicker"
+						style="width: 145px;" th:value="${inicial}" required> <label>Data
+						Inicial</label>
+				</div>
+				<div class="input-field col s3">
+					<input type="date" id="final" name="final" class="datepicker"
+						style="width: 145px; margin-left: -50px;" th:value="${final}" required> <label
+						style="margin-left: -50px;">Data Final</label>
+				</div>
+
+				<div class="input-field col s2" style="margin-left: -100px;">
+					<select name="operacao" id="operacao" class="browser-default" th:value="${operacao}" 
+						required>
+						<option value="" disabled selected>Operação</option>
+						<option value="ENTRADA">Entrada</option>
+						<option value="SAIDA">Saída</option>
+						<option value="AMBOS">Ambos</option>
+					</select>
+				</div>
+
+				<div>
+					<button type='submit' name='btnFiltrar' id="filtrar"
+						class='waves-effect waves-light btn' style="margin-top: 15px;">Filtrar</button>
+				</div>
+
+			</form>
+		</div>
+
+		<div class="col m12" style="margin-top: -30px;">
+			<div class="z-depth-1 table-div">
+				<table class="centered striped">
+					<thead>
+						<tr>
+							<th>Data</th>
+							<th>Descrição</th>
+							<th>Entrada</th>
+							<th>Saída</th>
+							<th>Editar</th>
+							<th>Excluir</th>
+						</tr>
+					</thead>
+
+					<tbody th:each="lan : ${session.lancamentos}">
+						<tr>
+							<td th:text="${lan.dataFormatada}"></td>
+							<td th:text="${lan.descricao}"></td>
+							<td><span id="valorPositivo"
+								th:if="${lan.operacao == 'ENTRADA'}" th:text="${lan.valor}"></span></td>
+							<td><span id="valorNegativo"
+								th:if="${lan.operacao == 'SAIDA'}" th:text="${lan.valor}"></span></td>
+							<td><a th:href="@{/editarLancamento/{idlan}(idlan=${lan.idLancamento})}"><i class="material-icons menus">edit</i></a></td>
+							<td><a
+								th:href="@{/excluirLancamento/{idlan}(idlan=${lan.idLancamento})}"><i
+									class="material-icons menus">clear</i></a></td>
+						</tr>
+					<tbody>
+				</table>
+
+			</div>
+
+
+
+
+		</div>
+
+	</main>
+
+	<!-- Fim do Main -->
+
+	<!--Início do Footer -->
+
+	<!--Início do Footer -->
+
+	<footer class="page-footer">
+		<div class="container">
+			<span style="color: black;"><b>©2020 Copyright:
+					caixadois.com.br</b></span> <a class="text-lighten-4 right"
+				style="color: black;" href="privacidade" method="get"><b>Política
+					de Privacidade</b></a>
+		</div>
+	</footer>
+
+	<!-- Fim do Footer -->
+
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="main.js"></script>
+
+	<!-- JS p/ navbar -->
+	<script>
+		function init() {
+			var cabecalho = document.querySelector('.cabecalho');
+			var cabecalhoEspaco = document.querySelector('.cabecalho-espaco');
+			var cabecalhoOffset = cabecalho.offsetTop;
+
+			function verificaCabecalho() {
+				var scrollTop = window.scrollY;
+				var cabecalhoAltura = cabecalho.offsetHeight;
+
+				if (scrollTop >= cabecalhoOffset) {
+					// rolagem da página passou do elemento, vamos fixá-lo
+					cabecalho.classList.add('cabecalho--fixo');
+
+					// ativa cabecalho-espaco para ocupar o espaço perdido
+					cabecalhoEspaco.style.height = cabecalhoAltura + 'px';
+				} else {
+					// retira a classe adicional do elemento
+					cabecalho.classList.remove('cabecalho--fixo');
+
+					// retira a altura do cabecalho-espaco
+					cabecalhoEspaco.style.height = 0;
+				}
+			}
+
+			window.addEventListener('scroll', verificaCabecalho);
+			window.addEventListener('resize', verificaCabecalho);
+		}
+
+		window.addEventListener('load', init);
+	</script>
+
+	<!-- JS p/ sidenav -->
+
+
+</body>
+</html>
