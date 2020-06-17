@@ -423,8 +423,9 @@ public class LancamentoController {
 
 				List<Lancamento> lancamentos = lr.findLancamentosPorMes(periodoInicial, periodoFinal,
 						usuario.getIdUsuario());
-				Double saldoFinal = lr.findSaldoFinal(usuario.getIdUsuario(), periodoInicial, periodoFinal);
-			    Double saldoInicial = lr.findSaldoInicial(usuario.getIdUsuario(), periodoInicial);
+				Double saldoInicial = lr.findSaldoInicial(usuario.getIdUsuario(), periodoInicial);
+				Double saldoFinal = (saldoInicial == null ? 0 : saldoInicial) + lr.findSaldoFinal(usuario.getIdUsuario(), periodoInicial, periodoFinal);
+			    
 				session.setAttribute("lancamentosMenu", lancamentos);
 				session.setAttribute("controladorDatas", false);
 				session.setAttribute("filtroMes", "Lançamentos do mês de " + mesFiltroNome + " de "+anoFiltro);
@@ -437,9 +438,10 @@ public class LancamentoController {
 
 				List<Lancamento> lancamentos = lr.findLancamentosPorMes(periodoInicial, periodoFinal,
 						usuario.getIdUsuario());
-				
-				Double saldoFinal = lr.findSaldoFinal(usuario.getIdUsuario(), periodoInicial, periodoFinal);
-			    Double saldoInicial = lr.findSaldoInicial(usuario.getIdUsuario(), periodoInicial);
+				Double saldoInicial = lr.findSaldoInicial(usuario.getIdUsuario(), periodoInicial);
+				Double saldoFinal = (saldoInicial == null ? 0 : saldoInicial) + (lr.findSaldoFinal(usuario.getIdUsuario(), periodoInicial, periodoFinal) == null ? 
+						0.0 : lr.findSaldoFinal(usuario.getIdUsuario(), periodoInicial, periodoFinal));
+			    
 				session.setAttribute("lancamentosMenu", lancamentos);
 				session.setAttribute("filtroMes", "Lançamentos do mês corrente");
 				session.setAttribute("saldoInicialMenu", "Saldo Inicial do Mês: R$"+(saldoInicial == null ? 0 : saldoInicial));
@@ -507,9 +509,10 @@ public class LancamentoController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		Double saldoInicial = lr.findSaldoInicial(usuario.getIdUsuario(), sdf.parse(dtInicial));
-		Double saldoFinal = lr.findSaldoFinal(usuario.getIdUsuario(), sdf.parse(dtInicial), sdf.parse(dtFinal));
+		Double saldoFinal = (saldoInicial == null ? 0 : saldoInicial) + (lr.findSaldoFinal(usuario.getIdUsuario(), sdf.parse(dtInicial), sdf.parse(dtFinal)) == null ? 
+				0.0 : lr.findSaldoFinal(usuario.getIdUsuario(), sdf.parse(dtInicial), sdf.parse(dtFinal)));
 
-		Paragraph saldoInicialPara = new Paragraph("Saldo Inicial: " + saldoInicial);
+		Paragraph saldoInicialPara = new Paragraph("Saldo Inicial: " + (saldoInicial == null ? 0 : saldoInicial));
 		Paragraph saldoFinalPara = new Paragraph("Saldo Final: " + saldoFinal);
 
 		document.add(para);
