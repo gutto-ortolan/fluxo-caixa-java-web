@@ -4,6 +4,7 @@
     <head>
         <meta charset="UTF-8"/>
         <title>Fluxo Caixa</title>
+<link rel="sortcut icon" href="imagens/logo.png"/>
 
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -33,9 +34,6 @@
                     </a>
                     <ul id="navbar-items" class="right hide-on-med-and-down" style="margin-right: 10px;">
                         <li>
-                            <a href="menu" method="get" class="menus">Menu</a></li>
-                        </li>
-                        <li>
 
                             <a class="dropdown-trigger" data-target="dropdown-lanc" href="#">
                                 <span class="menus">Lançamentos</span>
@@ -44,14 +42,12 @@
 
                             <!-- Dropdown -->
                             <ul id="dropdown-lanc" class="dropdown-content">
-                                <li><a href="novo-lancamento"><span class="menus">Novo</span></a></li>
+                                <li><a href="newLan"><span class="menus">Novo</span></a></li>
                                 <li><a href="manutencao-lancamento"><span class="menus">Editar/Excluir</span></a></li>
-                                <li><a href="programar-lancamento"><span class="menus">Programar</span></a></li>
+                                <li><a href="programarLancamento"><span class="menus">Programar</span></a></li>
                             </ul>
-
-
                         </li>
-                        <li><a href="#" class="menus">Extratos</a></li>
+                        <li><a href="extratos" class="menus">Extratos</a></li>
                         <li>
                             <a class="dropdown-trigger" data-target="dropdown-menu" href="#">
                                 <span class="menus" th:text="${session.usuarioLogado.nome}"></span>
@@ -62,14 +58,14 @@
                             <!-- Dropdown -->
                             <ul id="dropdown-menu" class="dropdown-content">
                                 <li><a href="perfil"><span class="menus">Perfil</span><i class="material-icons left menus" style="margin-right: 4px;">account_box</i></a></li>
-                                <li><a href="configuracao"><span class="menus">Config.</span><i class="material-icons left menus" style="margin-right: 4px;">build</i></a></li>
                                 <li class="divider"></li>
                                 <li><a href="logout"><span class="menus">Sair</span><i class="material-icons left menus" style="margin-right: 4px;">exit_to_app</i></a></li>
                             </ul>
                         </li>
                     </ul>
                 </div>
-            </nav>
+            </nav>            
+
         </header>
         <div class="cabecalho-espaco"><br/></div>
 
