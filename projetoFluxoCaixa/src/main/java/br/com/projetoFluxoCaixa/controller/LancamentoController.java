@@ -9,7 +9,9 @@ import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -37,11 +39,13 @@ import com.itextpdf.text.pdf.PdfWriter;
 import br.com.projetoFluxoCaixa.model.Lancamento;
 import br.com.projetoFluxoCaixa.model.Usuario;
 import br.com.projetoFluxoCaixa.repository.LancamentoRepository;
+import br.com.projetoFluxoCaixa.utils.ParseDate;
 
 @Controller
 public class LancamentoController {
 
 	private boolean controlador = false;
+	private boolean controladorDatas = false;
 
 	@Autowired
 	LancamentoRepository lr;
@@ -331,6 +335,87 @@ public class LancamentoController {
 		return "redirect:/extratos";
 
 	}
+	
+	@RequestMapping("/menuPrincipal")
+	public String menuPrincipal(HttpSession session, RedirectAttributes ra) {	
+		
+		Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
+		
+		if(usuario == null) {
+			ra.addFlashAttribute("mensagem", "É necessário logar para essa ação.");
+   		 	return "redirect:/login";
+		}else {
+			return "menu";
+		}
+		
+		
+	}	
+	
+	@RequestMapping(value="/menu", method=RequestMethod.GET)
+	public String menu(HttpSession session, RedirectAttributes ra) throws ParseException {	
+		
+        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");	
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        
+        if(usuario == null) {
+        	ra.addFlashAttribute("mensagem", "É necessário logar para essa ação.");
+   		 	return "redirect:/login";
+        }else {
+        	
+        	if (session.getAttribute("controladorDatas") != null) {
+				if (session.getAttribute("controladorDatas").equals(true)) {
+					controladorDatas = true;
+				}
+			}
+        	
+        	if (controladorDatas) {
+        		
+        		String di = sdf.format(session.getAttribute("periodoInicial"));
+        		String df = sdf.format(session.getAttribute("periodoFinal"));
+        		
+        		
+        		Date periodoInicial = sdf.parse(di);
+            	Date periodoFinal = sdf.parse(df);
+            	
+            	List<Lancamento> lancamentos = lr.findLancamentosPorMes(periodoInicial, periodoFinal, usuario.getIdUsuario());
+        		ra.addFlashAttribute("lan", lancamentos);
+        		session.setAttribute("controladorDatas", false);
+        		return "redirect:/menuPrincipal";
+        	}else {
+        		Date periodoInicial = new ParseDate().getLimiteInicial(new Date(), Calendar.MONTH);
+            	Date periodoFinal = new ParseDate().getLimiteFinal(new Date(), Calendar.MONTH);
+            	
+            	List<Lancamento> lancamentos = lr.findLancamentosPorMes(periodoInicial, periodoFinal, usuario.getIdUsuario());
+        		ra.addFlashAttribute("lan", lancamentos);
+        		return "redirect:/menuPrincipal";
+        	}
+        	
+        }
+        
+	}
+	
+	@RequestMapping("/filtrarLanPorMes")
+	private String filtrarLanPorMes(HttpSession session, RedirectAttributes ra, @RequestParam("mes") String mes, @RequestParam("ano") String ano) {
+		
+		
+		Integer mesSolicitado = new Integer(mes);
+		Integer anoSelecionado = new Integer(ano);
+		
+		ParseDate pd = new ParseDate();
+		
+		Calendar cal = new GregorianCalendar(anoSelecionado, mesSolicitado, 1);
+		
+		Date periodoInicial = pd.getLimiteInicial(cal.getTime(), Calendar.MONTH);
+    	Date periodoFinal = pd.getLimiteFinal(cal.getTime(), Calendar.MONTH);
+    	
+    	session.setAttribute("periodoInicial", periodoInicial);
+		session.setAttribute("periodoFinal", periodoFinal);
+		session.setAttribute("controladorDatas", true);
+		
+		return "redirect:/menu";
+	}
+	
 
 	@RequestMapping("/imprimirExtratos")
 	private String imprimir(HttpSession session, RedirectAttributes ra) throws DocumentException, IOException, ParseException {

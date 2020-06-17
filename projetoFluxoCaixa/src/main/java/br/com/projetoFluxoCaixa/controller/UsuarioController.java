@@ -1,6 +1,10 @@
 package br.com.projetoFluxoCaixa.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +20,7 @@ import br.com.projetoFluxoCaixa.model.Lancamento;
 import br.com.projetoFluxoCaixa.model.Usuario;
 import br.com.projetoFluxoCaixa.repository.LancamentoRepository;
 import br.com.projetoFluxoCaixa.repository.UsuarioRepository;
+import br.com.projetoFluxoCaixa.utils.ParseDate;
 
 
 @Controller
@@ -40,41 +45,7 @@ public class UsuarioController {
 	@RequestMapping("/cadastro")
 	public String cadastrar() {
 		return "cadastro";
-	}	
-	
-	@RequestMapping("/menuPrincipal")
-	public String menuPrincipal(HttpSession session, RedirectAttributes ra) {	
-		
-		Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
-		
-		if(usuario == null) {
-			ra.addFlashAttribute("mensagem", "É necessário logar para essa ação.");
-   		 	return "redirect:/login";
-		}else {
-			return "menu";
-		}
-		
-		
-		
-	}	
-	
-	@RequestMapping(value="/menu", method=RequestMethod.GET)
-	public String menu(HttpSession session, RedirectAttributes ra) {	
-		
-        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");	
-        
-        if(usuario == null) {
-        	ra.addFlashAttribute("mensagem", "É necessário logar para essa ação.");
-   		 	return "redirect:/login";
-        }else {
-        	ArrayList<Lancamento> lancamentoPesquisa= lr.findLancamentoPorUsuario(usuario.getIdUsuario());	
-    		ra.addFlashAttribute("lan", lancamentoPesquisa);
-    		ra.addFlashAttribute("saldo", "100");
-    		return "redirect:/menuPrincipal";
-        }
-        
-		
-	}	
+	}		
 		
 	@RequestMapping("/efetuarLogin")
 	public String efetuarLogin(@RequestParam("email") String email, @RequestParam("senha") String senha, RedirectAttributes ra, HttpSession session) {
@@ -111,6 +82,14 @@ public class UsuarioController {
 		ra.addFlashAttribute("email", usuario.getEmail());	
 		return "redirect:/cadastro";
 
+	}
+	
+	@RequestMapping("/logout")
+	private String logout(HttpSession session, RedirectAttributes ra) {
+		
+		session.setAttribute("usuarioLogado", null);
+		
+		return "/index.html";
 	}
 }
 	
