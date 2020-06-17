@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>Fluxo Caixa</title>
+<link rel="sortcut icon" href="imagens/logo.png" />
 
 <!--Import Google Icon Font-->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -44,7 +45,7 @@
 							<li><a href="manutencao-lancamento"><span class="menus">Editar/Excluir</span></a></li>
 							<li><a href="programarLancamento"><span class="menus">Programar</span></a></li>
 						</ul></li>
-					<li><a href="#" class="menus">Extratos</a></li>
+					<li><a href="extratos" class="menus">Extratos</a></li>
 					<li><a class="dropdown-trigger" data-target="dropdown-menu"
 						href="#"> <span class="menus"
 							th:text="${session.usuarioLogado.nome}"></span> <i
@@ -54,8 +55,6 @@
 						<ul id="dropdown-menu" class="dropdown-content">
 							<li><a href="perfil"><span class="menus">Perfil</span><i
 									class="material-icons left menus" style="margin-right: 4px;">account_box</i></a></li>
-							<li><a href="configuracao"><span class="menus">Config.</span><i
-									class="material-icons left menus" style="margin-right: 4px;">build</i></a></li>
 							<li class="divider"></li>
 							<li><a href="logout"><span class="menus">Sair</span><i
 									class="material-icons left menus" style="margin-right: 4px;">exit_to_app</i></a></li>
@@ -63,6 +62,7 @@
 				</ul>
 			</div>
 		</nav>
+
 	</header>
 	<div class="cabecalho-espaco">
 		</br>
@@ -93,16 +93,20 @@
 									<option value="SAIDA">Saída</option>
 								</select>
 							</div>
+
+
+						</div>
+
+						<div class="row">
 							<div class="input-field col s4">
 								<input type="date" id="data" name="data" class="datepicker">
 								<label>Data</label>
 							</div>
-							<div class="input-field col s4"  style="margin: 0px;">
-								<label>Data Final<br/><input type="month" id=mesFinal name="mesFinal" class="datepicker" style="width: 70%; margin-top:  4px;"></label>
-							
-								
+							<div class="input-field col s4" style="margin: 0px;">
+								<label>Data Final<br />
+								<input type="month" id=mesFinal name="mesFinal"
+									class="datepicker" style="width: 100%; margin-top: 4px;"></label>
 							</div>
-							
 						</div>
 
 						<div class="row" style="margin-top: -50px;">
@@ -119,7 +123,8 @@
 							</div>
 						</div>
 						<button type='submit' name='btn_login' id="programar"
-							class='waves-effect waves-light btn right' style="margin-top: -40px; margin-bottom: -50px;">Lançar</button>
+							class='waves-effect waves-light btn right'
+							style="margin-top: -40px; margin-bottom: -50px;">Lançar</button>
 					</div>
 				</form>
 			</div>
@@ -130,8 +135,8 @@
 	</main>
 
 	<!-- Fim do Main -->
-	
-	
+
+
 
 	<!--Início do Footer -->
 
@@ -182,32 +187,31 @@
 		}
 
 		window.addEventListener('load', init);
-		
 	</script>
 
 	<script>
-	//controle de proximos meses para programação de lançamentos
-	$("#data").mouseout(function(event){
-		// captura data do primeiro lançamento
-		var dateControl = document.querySelector("#data").value;
+		//controle de proximos meses para programação de lançamentos
+		$("#data").mouseout(function(event) {
+			// captura data do primeiro lançamento
+			var dateControl = document.querySelector("#data").value;
 
-		let dataString = dateControl.split("-");
-		var proximoMes = parseInt(dataString[1])+1;
+			let dataString = dateControl.split("-");
+			var proximoMes = parseInt(dataString[1]) + 1;
 
-		//Seta os proximos meses recorrentes como String
-		var d = (dataString[0] +"-"+"0"+proximoMes);
-		if(d.length == 8){
-			var d = (dataString[0] +"-"+proximoMes);
+			//Seta os proximos meses recorrentes como String
+			var d = (dataString[0] + "-" + "0" + proximoMes);
+			if (d.length == 8) {
+				var d = (dataString[0] + "-" + proximoMes);
 
-			//Em caso do primeiro mês ser 12
-			if(proximoMes==13){
-				var d = (parseInt(dataString[0])+1 +"-"+"01");
+				//Em caso do primeiro mês ser 12
+				if (proximoMes == 13) {
+					var d = (parseInt(dataString[0]) + 1 + "-" + "01");
+				}
 			}
-		}	
-		
-		//Seta os meses que podem ser escolhidos como proximos para lançamento futuros
-		document.getElementById('mesFinal').setAttribute('min', d);		
-	});	
+
+			//Seta os meses que podem ser escolhidos como proximos para lançamento futuros
+			document.getElementById('mesFinal').setAttribute('min', d);
+		});
 	</script>
 </body>
 </html>
